@@ -1,0 +1,765 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>3SG — Agence de communication</title>
+  <meta name="description" content="3SG est une agence de communication créative. Stratégie, branding et expériences digitales." />
+
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;800&display=swap" rel="stylesheet">
+
+  <style>
+    /* Local brand fonts (OVH friendly) */
+    @font-face{
+      font-family:'BergenMono';
+      src:url('media/fonts/BergenMono-Bold.otf') format('opentype');
+      font-weight:700;
+      font-style:normal;
+      font-display:swap;
+    }
+    @font-face{
+      font-family:'Bellinzo';
+      src:url('media/fonts/Bellinzo-Bold.otf') format('opentype');
+      font-weight:700;
+      font-style:normal;
+      font-display:swap;
+    }
+
+    :root{
+      --bg:#000;
+      --fg:#fff;
+      --muted:rgba(255,255,255,.58);
+      --line:rgba(255,255,255,.12);
+      --bbdo-red:#E10600;
+      --radius:18px;
+    }
+
+    *{ margin:0; padding:0; box-sizing:border-box; }
+    html{ scroll-behavior:smooth; }
+    body{
+      font-family:Inter,system-ui,sans-serif;
+      background:var(--bg);
+      color:var(--fg);
+      overflow-x:hidden;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+    }
+    a{ color:inherit; text-decoration:none; }
+    button{ font:inherit; }
+
+    /* Reveal on scroll (safe fallback) */
+    .reveal{ opacity:1; transform:none; }
+    html.js .reveal{ opacity:0; transform:translateY(54px); transition:opacity .8s ease, transform .8s ease; }
+    html.js .reveal.visible{ opacity:1; transform:none; }
+
+    /* Cursor (desktop only) */
+    html.js{ cursor:none; }
+    .cursor,.cursorDot{ position:fixed; top:0; left:0; pointer-events:none; z-index:9999; display:none; }
+    html.js .cursor, html.js .cursorDot{ display:block; }
+    .cursor{
+      width:44px; height:44px;
+      border:1px solid rgba(255,255,255,.55);
+      border-radius:999px;
+      transform:translate(-100px,-100px);
+      mix-blend-mode:difference;
+      transition:width .22s ease, height .22s ease, border-color .22s ease, opacity .22s ease;
+    }
+    .cursorDot{
+      width:6px; height:6px; background:#fff; border-radius:999px;
+      transform:translate(-100px,-100px);
+      mix-blend-mode:difference;
+      opacity:.9;
+    }
+    html.is-hover .cursor{ width:62px; height:62px; border-color:rgba(255,255,255,.82); }
+    html.is-down .cursor{ width:36px; height:36px; }
+    @media (pointer:coarse){
+      html.js{ cursor:auto; }
+      .cursor,.cursorDot{ display:none !important; }
+    }
+
+    /* Nav */
+    nav{
+      position:fixed;
+      inset:0 0 auto 0;
+      padding:24px 7vw;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      z-index:80;
+      background:linear-gradient(180deg, rgba(0,0,0,.62), rgba(0,0,0,0));
+    }
+    .brand{ display:flex; align-items:center; gap:10px; }
+    .logo{
+      height:28px; width:auto; display:block;
+      opacity:0; transform:translateY(-6px);
+      transition:opacity .6s ease, transform .6s ease;
+    }
+    html.js .logo.is-in{ opacity:1; transform:none; }
+    .navRight{ display:flex; align-items:center; gap:22px; }
+    .navLink{
+      font-size:12px;
+      letter-spacing:.12em;
+      text-transform:uppercase;
+      color:var(--muted);
+      position:relative;
+      padding:10px 2px;
+    }
+    .navLink:hover{ color:var(--fg); }
+    .navLink::after{
+      content:"";
+      position:absolute;
+      left:0; right:0; bottom:6px;
+      height:1px;
+      background:rgba(255,255,255,.35);
+      transform:scaleX(0);
+      transform-origin:left;
+      transition:transform .25s ease;
+    }
+    .navLink:hover::after{ transform:scaleX(1); }
+
+    .langToggle{
+      display:flex; align-items:center; gap:10px;
+      padding-left:10px;
+      border-left:1px solid var(--line);
+      margin-left:6px;
+    }
+    .langBtn{
+      appearance:none;
+      background:none;
+      border:0;
+      cursor:pointer;
+      font-size:12px;
+      letter-spacing:.12em;
+      text-transform:uppercase;
+      color:var(--muted);
+      padding:10px 2px;
+    }
+    .langBtn[aria-pressed="true"]{ color:var(--fg); }
+
+    /* Intro red panel with video */
+    .intro{
+      height:100vh;
+      background:var(--bbdo-red);
+      display:flex;
+      align-items:flex-end;
+      padding:0 7vw 10vh;
+      position:relative;
+      overflow:hidden;
+    }
+    .intro::before{
+      content:"";
+      position:absolute; inset:0;
+      background:
+        radial-gradient(1200px 800px at 20% 20%, rgba(255,255,255,.12), rgba(255,255,255,0) 60%),
+        linear-gradient(180deg, rgba(0,0,0,.12), rgba(0,0,0,.12));
+      pointer-events:none;
+    }
+    .introGrid{
+      width:100%;
+      display:grid;
+      grid-template-columns: 1.1fr .9fr;
+      gap:6vw;
+      align-items:end;
+      position:relative;
+      z-index:2;
+    }
+
+    /* Intro mark: 3 (Bergen) + SG (Bellinzo) */
+    .introMark{
+      display:flex;
+      flex-direction:column;
+      gap:14px;
+    }
+    .introMarkText{
+      display:flex;
+      align-items:flex-end;
+      font-size:clamp(60px, 10vw, 170px);
+      line-height:.95;
+      opacity:0;
+      transform:translateY(28px);
+      transition:opacity .85s ease, transform .85s ease;
+    }
+    html.js .introMarkText.is-in{ opacity:1; transform:none; }
+    .introThree{
+      font-family:'BergenMono', monospace;
+      font-weight:700;
+      letter-spacing:-0.04em;
+    }
+    .introSG{
+      font-family:'Bellinzo', serif;
+      font-weight:700;
+      letter-spacing:-0.02em;
+    }
+    .introHint{
+      color:rgba(255,255,255,.72);
+      font-size:12px;
+      letter-spacing:.16em;
+      text-transform:uppercase;
+      opacity:0;
+      transform:translateY(12px);
+      transition:opacity .85s ease .12s, transform .85s ease .12s;
+    }
+    html.js .introHint.is-in{ opacity:1; transform:none; }
+
+    .introVideoWrap{
+      justify-self:end;
+      width:min(56vw, 760px);
+      aspect-ratio:16/9;
+      border-radius:var(--radius);
+      overflow:hidden;
+      border:1px solid rgba(255,255,255,.22);
+      box-shadow:0 28px 80px rgba(0,0,0,.38);
+      background:rgba(0,0,0,.08);
+      transform:translateY(28px) scale(.985);
+      opacity:0;
+      transition:opacity .85s ease .10s, transform .85s ease .10s;
+      will-change:transform;
+    }
+    html.js .introVideoWrap.is-in{ opacity:1; transform:none; }
+    .introVideoWrap video{
+      width:100%; height:100%;
+      object-fit:cover;
+      display:block;
+      filter:contrast(1.05) saturate(.95);
+    }
+
+    /* Black hero */
+    .hero{
+      height:100vh;
+      background:var(--bg);
+      display:flex;
+      align-items:flex-end;
+      padding:0 7vw 10vh;
+    }
+    .hero h1{
+      font-weight:800;
+      letter-spacing:-0.035em;
+      line-height:.95;
+      font-size:clamp(56px, 10vw, 160px);
+      max-width:14ch;
+    }
+
+    /* Sections */
+    .wrap{ padding:0 7vw; background:var(--bg); }
+    section{ padding:18vh 0; border-top:1px solid rgba(255,255,255,.08); }
+    .grid{
+      display:grid;
+      grid-template-columns: 1.2fr .8fr;
+      gap:6vw;
+      align-items:start;
+    }
+    .statement{
+      font-size:clamp(30px, 4.2vw, 74px);
+      font-weight:600;
+      line-height:1.06;
+      letter-spacing:-0.02em;
+    }
+    .muted{
+      color:var(--muted);
+      font-size:18px;
+      line-height:1.6;
+      max-width:40ch;
+      padding-top:10px;
+    }
+
+    /* Work */
+    .workHead{ display:flex; justify-content:space-between; align-items:flex-end; gap:28px; }
+    .kicker{ color:var(--muted); font-size:12px; letter-spacing:.14em; text-transform:uppercase; }
+    .projects{
+      margin-top:6vh;
+      display:grid;
+      grid-template-columns:repeat(2,1fr);
+      gap:22px;
+    }
+    .project{
+      position:relative;
+      height:72vh;
+      border:1px solid rgba(255,255,255,.14);
+      border-radius:var(--radius);
+      overflow:hidden;
+      background:#0a0a0a;
+      transform:translateZ(0);
+      cursor:pointer;
+    }
+    .projectMedia{ position:absolute; inset:0; }
+    .project video, .project img{
+      width:100%; height:100%;
+      object-fit:cover;
+      display:block;
+      filter:saturate(.9) contrast(1.05);
+      transform:scale(1);
+      transition:transform .9s ease;
+    }
+    .project::before{
+      content:"";
+      position:absolute; inset:0;
+      background:linear-gradient(180deg, rgba(0,0,0,.02), rgba(0,0,0,.78));
+      z-index:1;
+    }
+    .projectMeta{
+      position:absolute;
+      left:26px; right:26px; bottom:24px;
+      z-index:2;
+      display:flex;
+      justify-content:space-between;
+      align-items:flex-end;
+      gap:18px;
+    }
+    .projectTitle{ font-size:22px; letter-spacing:-0.015em; color:rgba(255,255,255,.92); }
+    .projectTag{ margin-top:6px; color:var(--muted); font-size:13px; letter-spacing:.06em; }
+    .projectCta{
+      color:rgba(255,255,255,.86);
+      font-size:13px;
+      letter-spacing:.12em;
+      text-transform:uppercase;
+      border:1px solid rgba(255,255,255,.22);
+      border-radius:999px;
+      padding:10px 14px;
+      opacity:0;
+      transform:translateY(-6px);
+      transition:opacity .25s ease, transform .25s ease, border-color .25s ease;
+      white-space:nowrap;
+    }
+    .project:hover{ border-color:rgba(255,255,255,.26); }
+    .project:hover .projectCta{ opacity:1; transform:none; border-color:rgba(255,255,255,.34); }
+    .project:hover video, .project:hover img{ transform:scale(1.03); }
+
+    /* Modal fullscreen */
+    .modal{
+      position:fixed; inset:0; z-index:120;
+      background:rgba(0,0,0,.92);
+      display:none;
+    }
+    .modal.is-open{ display:block; }
+    .modalInner{
+      position:absolute; inset:0;
+      padding:22px 7vw;
+      display:flex;
+      flex-direction:column;
+      gap:18px;
+    }
+    .modalTop{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      padding-top:12px;
+    }
+    .modalTitle{
+      font-size:12px;
+      letter-spacing:.14em;
+      text-transform:uppercase;
+      color:rgba(255,255,255,.82);
+    }
+    .modalClose{
+      appearance:none;
+      background:none;
+      border:1px solid rgba(255,255,255,.22);
+      color:rgba(255,255,255,.9);
+      border-radius:999px;
+      padding:10px 14px;
+      cursor:pointer;
+      font-size:12px;
+      letter-spacing:.12em;
+      text-transform:uppercase;
+    }
+    .modalClose:hover{ border-color:rgba(255,255,255,.38); }
+    .modalMedia{
+      flex:1;
+      border:1px solid rgba(255,255,255,.14);
+      border-radius:22px;
+      overflow:hidden;
+      background:#050505;
+      box-shadow:0 30px 120px rgba(0,0,0,.55);
+    }
+    .modalMedia video, .modalMedia img{
+      width:100%; height:100%;
+      object-fit:contain;
+      display:block;
+      background:#000;
+    }
+    .modalMeta{
+      display:flex;
+      justify-content:space-between;
+      gap:20px;
+      color:var(--muted);
+      font-size:14px;
+    }
+
+    .contact{ padding:22vh 0; }
+
+    footer{
+      padding:40px 7vw 60px 7vw;
+      border-top:1px solid rgba(255,255,255,.08);
+      display:flex;
+      justify-content:space-between;
+      gap:20px;
+      color:var(--muted);
+      font-size:14px;
+      background:var(--bg);
+    }
+
+    @media (max-width:980px){
+      .introGrid{ grid-template-columns:1fr; gap:26px; align-items:start; }
+      .introVideoWrap{ width:100%; }
+      .grid{ grid-template-columns:1fr; }
+      .projects{ grid-template-columns:1fr; }
+      .introMarkText{ font-size:clamp(56px, 14vw, 140px); }
+    }
+  </style>
+</head>
+<body>
+
+<div class="cursor"></div><div class="cursorDot"></div>
+
+<nav>
+  <div class="brand">
+    <img src="media/logo-3sg.png" alt="3SG" class="logo" id="navLogo">
+  </div>
+  <div class="navRight">
+    <a class="navLink" href="#work" data-hover data-i18n="navWork">Work</a>
+    <a class="navLink" href="#about" data-hover data-i18n="navAbout">About</a>
+    <a class="navLink" href="#contact" data-hover data-i18n="navContact">Contact</a>
+
+    <div class="langToggle" aria-label="Language">
+      <button class="langBtn" id="btnFR" type="button" aria-pressed="true" data-hover>FR</button>
+      <button class="langBtn" id="btnEN" type="button" aria-pressed="false" data-hover>EN</button>
+    </div>
+  </div>
+</nav>
+
+<header class="intro" id="intro">
+  <div class="introGrid">
+    <div class="introMark">
+      <div class="introMarkText" id="introMark">
+        <span class="introThree">3</span><span class="introSG">SG</span>
+      </div>
+      <div class="introHint" id="introHint" data-i18n="introHint">Scroll</div>
+    </div>
+    <div>
+      <div class="introVideoWrap" id="introVideo" data-hover>
+        <video src="media/intro.mp4" poster="media/intro.jpg" autoplay muted loop playsinline preload="metadata"></video>
+      </div>
+    </div>
+  </div>
+</header>
+
+<header class="hero" id="top">
+  <h1 class="reveal" data-i18n="hero">We build<br>brands<br>people<br>remember.</h1>
+</header>
+
+<main class="wrap">
+  <section id="about">
+    <div class="grid">
+      <div class="statement reveal" data-i18n="aboutStatement">
+        3SG is a creative communication agency focused on ideas that move brands forward.
+      </div>
+      <p class="muted reveal" data-i18n="aboutMuted">
+        Strategy, branding and digital experiences designed to create impact and relevance.
+      </p>
+    </div>
+  </section>
+
+  <section id="work">
+    <div class="workHead">
+      <div class="statement reveal" data-i18n="workTitle">Selected work</div>
+      <div class="kicker reveal">3sg.tn</div>
+    </div>
+
+    <div class="projects">
+      <a class="project reveal" href="#" data-hover data-project
+         data-title="Project 01"
+         data-tag="Campaign · Branding"
+         data-type="video"
+         data-src="media/project-01.mp4"
+         data-poster="media/project-01.jpg"
+         onclick="return false;">
+        <div class="projectMedia">
+          <video src="media/project-01.mp4" poster="media/project-01.jpg" autoplay muted loop playsinline preload="metadata"></video>
+        </div>
+        <div class="projectMeta">
+          <div>
+            <div class="projectTitle" data-i18n="p1">Project 01</div>
+            <div class="projectTag" data-i18n="p1tag">Campaign · Branding</div>
+          </div>
+          <div class="projectCta" data-i18n="view">View</div>
+        </div>
+      </a>
+
+      <a class="project reveal" href="#" data-hover data-project
+         data-title="Project 02"
+         data-tag="Identity · Design"
+         data-type="image"
+         data-src="media/project-02.jpg"
+         onclick="return false;">
+        <div class="projectMedia">
+          <img src="media/project-02.jpg" alt="Project 02" loading="lazy">
+        </div>
+        <div class="projectMeta">
+          <div>
+            <div class="projectTitle" data-i18n="p2">Project 02</div>
+            <div class="projectTag" data-i18n="p2tag">Identity · Design</div>
+          </div>
+          <div class="projectCta" data-i18n="view">View</div>
+        </div>
+      </a>
+
+      <a class="project reveal" href="#" data-hover data-project
+         data-title="Project 03"
+         data-tag="Digital · Experience"
+         data-type="video"
+         data-src="media/project-03.mp4"
+         data-poster="media/project-03.jpg"
+         onclick="return false;">
+        <div class="projectMedia">
+          <video src="media/project-03.mp4" poster="media/project-03.jpg" autoplay muted loop playsinline preload="metadata"></video>
+        </div>
+        <div class="projectMeta">
+          <div>
+            <div class="projectTitle" data-i18n="p3">Project 03</div>
+            <div class="projectTag" data-i18n="p3tag">Digital · Experience</div>
+          </div>
+          <div class="projectCta" data-i18n="view">View</div>
+        </div>
+      </a>
+
+      <a class="project reveal" href="#" data-hover data-project
+         data-title="Project 04"
+         data-tag="Content · Social"
+         data-type="image"
+         data-src="media/project-04.jpg"
+         onclick="return false;">
+        <div class="projectMedia">
+          <img src="media/project-04.jpg" alt="Project 04" loading="lazy">
+        </div>
+        <div class="projectMeta">
+          <div>
+            <div class="projectTitle" data-i18n="p4">Project 04</div>
+            <div class="projectTag" data-i18n="p4tag">Content · Social</div>
+          </div>
+          <div class="projectCta" data-i18n="view">View</div>
+        </div>
+      </a>
+    </div>
+  </section>
+
+  <section id="contact" class="contact">
+    <div class="grid">
+      <h2 class="statement reveal" data-i18n="contactTitle">Let’s talk.</h2>
+      <div class="muted reveal">
+        <div>contact@3sg.tn</div>
+        <div style="margin-top:12px" class="kicker" data-i18n="contactKicker">Tunisia · Worldwide</div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div data-i18n="footerLeft">© 2025 3SG</div>
+  <div data-i18n="footerRight">Tunisia · Worldwide</div>
+</footer>
+
+<div class="modal" id="modal" aria-hidden="true">
+  <div class="modalInner">
+    <div class="modalTop">
+      <div class="modalTitle" id="modalTitle">Project</div>
+      <button class="modalClose" id="modalClose" type="button" data-hover>Close</button>
+    </div>
+    <div class="modalMedia" id="modalMedia"></div>
+    <div class="modalMeta">
+      <div id="modalTag">—</div>
+      <div>3sg.tn</div>
+    </div>
+  </div>
+</div>
+
+<script>
+  document.documentElement.classList.add('js');
+
+  // Entrance: nav logo + intro mark + intro video
+  (function(){
+    var navLogo = document.getElementById('navLogo');
+    var introMark = document.getElementById('introMark');
+    var introHint = document.getElementById('introHint');
+    var introVideo = document.getElementById('introVideo');
+    setTimeout(function(){
+      if (navLogo) navLogo.classList.add('is-in');
+      if (introMark) introMark.classList.add('is-in');
+      if (introHint) introHint.classList.add('is-in');
+      if (introVideo) introVideo.classList.add('is-in');
+    }, 120);
+  })();
+
+  // i18n
+  const DICT = {
+    fr: {
+      navWork: 'Projets',
+      navAbout: 'Agence',
+      navContact: 'Contact',
+      introHint: 'Scroll',
+      hero: 'We build<br>brands<br>people<br>remember.',
+      aboutStatement: '3SG est une agence de communication créative centrée sur des idées qui font avancer les marques.',
+      aboutMuted: 'Stratégie, branding et expériences digitales conçus pour créer de l’impact, de la pertinence et de la valeur durable.',
+      workTitle: 'Projets sélectionnés',
+      p1: 'Projet 01',
+      p1tag: 'Campagne · Branding',
+      p2: 'Projet 02',
+      p2tag: 'Identité · Design',
+      p3: 'Projet 03',
+      p3tag: 'Digital · Expérience',
+      p4: 'Projet 04',
+      p4tag: 'Contenu · Social',
+      view: 'Voir',
+      contactTitle: 'Parlons.',
+      contactKicker: 'Tunisie · International',
+      footerLeft: '© 2025 3SG',
+      footerRight: 'Tunisie · International',
+      close: 'Fermer'
+    },
+    en: {
+      navWork: 'Work',
+      navAbout: 'About',
+      navContact: 'Contact',
+      introHint: 'Scroll',
+      hero: 'We build<br>brands<br>people<br>remember.',
+      aboutStatement: '3SG is a creative communication agency focused on ideas that move brands forward.',
+      aboutMuted: 'Strategy, branding and digital experiences designed to create impact and relevance.',
+      workTitle: 'Selected work',
+      p1: 'Project 01',
+      p1tag: 'Campaign · Branding',
+      p2: 'Project 02',
+      p2tag: 'Identity · Design',
+      p3: 'Project 03',
+      p3tag: 'Digital · Experience',
+      p4: 'Project 04',
+      p4tag: 'Content · Social',
+      view: 'View',
+      contactTitle: 'Let’s talk.',
+      contactKicker: 'Tunisia · Worldwide',
+      footerLeft: '© 2025 3SG',
+      footerRight: 'Tunisia · Worldwide',
+      close: 'Close'
+    }
+  };
+
+  function setLang(lang){
+    const dict = DICT[lang];
+    document.querySelectorAll('[data-i18n]').forEach(function(el){
+      const key = el.getAttribute('data-i18n');
+      if (!key || !dict[key]) return;
+      el.innerHTML = dict[key];
+    });
+    var btnFR = document.getElementById('btnFR');
+    var btnEN = document.getElementById('btnEN');
+    if (btnFR && btnEN){
+      btnFR.setAttribute('aria-pressed', lang==='fr' ? 'true' : 'false');
+      btnEN.setAttribute('aria-pressed', lang==='en' ? 'true' : 'false');
+    }
+    var closeBtn = document.getElementById('modalClose');
+    if (closeBtn) closeBtn.textContent = dict.close;
+    try{ localStorage.setItem('lang', lang); }catch(e){}
+  }
+
+  var saved = 'fr';
+  try{ saved = localStorage.getItem('lang') || 'fr'; }catch(e){}
+  setLang(saved === 'en' ? 'en' : 'fr');
+
+  var btnFR = document.getElementById('btnFR');
+  var btnEN = document.getElementById('btnEN');
+  if (btnFR) btnFR.addEventListener('click', function(){ setLang('fr'); });
+  if (btnEN) btnEN.addEventListener('click', function(){ setLang('en'); });
+
+  // Reveal on scroll
+  var obs = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){ if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.15 });
+  document.querySelectorAll('.reveal').forEach(function(el){ obs.observe(el); });
+
+  // Cursor
+  (function(){
+    var cursor = document.querySelector('.cursor');
+    var dot = document.querySelector('.cursorDot');
+    if (!cursor || !dot) return;
+    var x=0,y=0,tx=0,ty=0;
+    window.addEventListener('mousemove', function(e){
+      tx=e.clientX; ty=e.clientY;
+      dot.style.transform = 'translate(' + tx + 'px,' + ty + 'px)';
+    });
+    function loop(){
+      x += (tx-x)*.15; y += (ty-y)*.15;
+      cursor.style.transform = 'translate(' + x + 'px,' + y + 'px)';
+      requestAnimationFrame(loop);
+    }
+    loop();
+    document.querySelectorAll('[data-hover]').forEach(function(el){
+      el.addEventListener('mouseenter', function(){ document.documentElement.classList.add('is-hover'); });
+      el.addEventListener('mouseleave', function(){ document.documentElement.classList.remove('is-hover'); });
+    });
+    window.addEventListener('mousedown', function(){ document.documentElement.classList.add('is-down'); });
+    window.addEventListener('mouseup', function(){ document.documentElement.classList.remove('is-down'); });
+  })();
+
+  // Fullscreen projects (modal)
+  (function(){
+    var modal = document.getElementById('modal');
+    var modalMedia = document.getElementById('modalMedia');
+    var modalTitle = document.getElementById('modalTitle');
+    var modalTag = document.getElementById('modalTag');
+    var closeBtn = document.getElementById('modalClose');
+    if (!modal || !modalMedia || !modalTitle || !modalTag || !closeBtn) return;
+
+    function openModal(data){
+      modalMedia.innerHTML = '';
+      modalTitle.textContent = data.title || 'Project';
+      modalTag.textContent = data.tag || '';
+
+      if (data.type === 'video'){
+        var v = document.createElement('video');
+        v.src = data.src;
+        if (data.poster) v.poster = data.poster;
+        v.autoplay = true;
+        v.muted = true;
+        v.loop = true;
+        v.playsInline = true;
+        v.controls = true;
+        modalMedia.appendChild(v);
+      } else {
+        var img = document.createElement('img');
+        img.src = data.src;
+        img.alt = data.title || '';
+        modalMedia.appendChild(img);
+      }
+
+      modal.classList.add('is-open');
+      modal.setAttribute('aria-hidden','false');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeModal(){
+      modal.classList.remove('is-open');
+      modal.setAttribute('aria-hidden','true');
+      modalMedia.innerHTML = '';
+      document.body.style.overflow = '';
+    }
+
+    document.querySelectorAll('[data-project]').forEach(function(card){
+      card.addEventListener('click', function(e){
+        e.preventDefault();
+        var data = {
+          title: card.getAttribute('data-title') || 'Project',
+          tag: card.getAttribute('data-tag') || '',
+          type: card.getAttribute('data-type') || 'image',
+          src: card.getAttribute('data-src') || '',
+          poster: card.getAttribute('data-poster') || ''
+        };
+        openModal(data);
+      });
+    });
+
+    closeBtn.addEventListener('click', closeModal);
+    modal.addEventListener('click', function(e){ if (e.target === modal) closeModal(); });
+    window.addEventListener('keydown', function(e){ if (e.key === 'Escape') closeModal(); });
+  })();
+</script>
+
+</body>
+</html>
