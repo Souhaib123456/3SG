@@ -393,6 +393,25 @@
   .introMarkText{
     font-size:clamp(46px, 15vw, 110px);
   }
+/* Fix 3SG sur une seule ligne (mobile) */
+.introMarkText{
+  flex-wrap:nowrap;          /* empêche le retour à la ligne */
+  white-space:nowrap;        /* force une seule ligne */
+  align-items:baseline;      /* aligne les baselines des 2 polices */
+  gap:0;                     /* pas d’espace entre 3 et SG */
+}
+
+.introThree,
+.introSG{
+  display:inline-block;
+  line-height:0.9;
+}
+
+/* Ajustement fin pour que "SG" colle parfaitement */
+.introSG{
+  position:relative;
+  top:0.06em;                /* ajuste légèrement la hauteur (si besoin) */
+}
 
   .introVideoWrap{
     width:100%;
