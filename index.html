@@ -364,27 +364,63 @@
       background:var(--bg);
     }
 
-    /* Mobile fixes */
-    @media (max-width: 768px){
-      nav{ padding:16px 5vw; }
-      .navRight{ gap:12px; }
-      .navLink{ display:none; } /* hide desktop links */
-      .langToggle{ margin-left:0; border-left:0; padding-left:0; }
-      .menuBtn{ display:flex; }
+   /* =========================
+   MOBILE — FIX ESPACES
+   ========================= */
+@media (max-width: 768px){
 
-      .intro{ padding:0 5vw 7vh; }
-      .introGrid{ grid-template-columns:1fr; gap:18px; align-items:start; }
-      .introMarkText{ font-size:clamp(48px, 16vw, 120px); }
-      .introVideoWrap{ width:100%; border-radius:16px; }
+  /* NAV */
+  nav{ padding:16px 5vw; }
+  .navRight{ gap:12px; }
+  .navLink{ display:none; }
+  .langToggle{ margin-left:0; border-left:0; padding-left:0; }
+  .menuBtn{ display:flex; }
 
-      .wrap{ padding:0 5vw; }
-      section{ padding:14vh 0; }
-      .grid{ grid-template-columns:1fr; gap:18px; }
-      .projects{ grid-template-columns:1fr; }
-      .projects .project{ height:56vh; }
-      .modalInner{ padding:18px 5vw; }
-      .mobileMenuInner{ padding:18px 5vw; }
-    }
+  /* 🔴 INTRO : RÉDUCTION ROUGE */
+  .intro{
+    height:auto !important;      /* SUPPRIME le 100vh */
+    min-height:75vh;             /* hauteur réelle utile */
+    padding:90px 5vw 4vh;        /* moins d’espace en bas */
+    align-items:flex-start;      /* contenu en haut */
+  }
+
+  .introGrid{
+    grid-template-columns:1fr;
+    gap:16px;
+    align-items:start;
+  }
+
+  .introMarkText{
+    font-size:clamp(46px, 15vw, 110px);
+  }
+
+  .introVideoWrap{
+    width:100%;
+    border-radius:16px;
+  }
+
+  /* 🖤 HERO : RÉDUCTION NOIR */
+  .hero{
+    height:auto !important;      /* SUPPRIME le 100vh */
+    min-height:60vh;             /* beaucoup plus compact */
+    padding:0 5vw 6vh;
+    align-items:flex-end;
+  }
+
+  .hero h1{
+    font-size:clamp(40px, 11vw, 90px);
+    max-width:18ch;
+  }
+
+  /* AUTRES */
+  .wrap{ padding:0 5vw; }
+  section{ padding:12vh 0; }
+  .grid{ grid-template-columns:1fr; gap:18px; }
+  .projects{ grid-template-columns:1fr; }
+  .projects .project{ height:52vh; }
+  .modalInner{ padding:18px 5vw; }
+  .mobileMenuInner{ padding:18px 5vw; }
+}
   </style>
 </head>
 <body>
