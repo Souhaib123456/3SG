@@ -351,6 +351,53 @@
     }
     .modalMedia video, .modalMedia img{ width:100%; height:100%; object-fit:contain; display:block; background:#000; }
     .modalMeta{ display:flex; justify-content:space-between; gap:20px; color:var(--muted); font-size:14px; }
+.modalDetails{
+  margin-top:10px;
+  color:rgba(255,255,255,.62);
+  font-size:14px;
+  line-height:1.6;
+  max-width:70ch;
+}
+
+.modalNav{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:14px;
+}
+
+.modalNavBtn{
+  appearance:none;
+  background:none;
+  border:1px solid rgba(255,255,255,.18);
+  color:rgba(255,255,255,.9);
+  border-radius:999px;
+  padding:10px 14px;
+  cursor:pointer;
+  font-size:12px;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+}
+.modalNavBtn:disabled{
+  opacity:.35;
+  cursor:not-allowed;
+}
+
+.modalDots{
+  display:flex;
+  gap:8px;
+  align-items:center;
+  justify-content:center;
+  flex:1;
+}
+.modalDot{
+  width:6px; height:6px;
+  border-radius:999px;
+  background:rgba(255,255,255,.22);
+}
+.modalDot.is-active{
+  background:rgba(255,255,255,.92);
+}
 
     .contact{ padding:22vh 0; }
     footer{
@@ -604,11 +651,21 @@
       <div class="modalTitle" id="modalTitle">Project</div>
       <button class="modalClose" id="modalClose" type="button" data-hover>Close</button>
     </div>
-    <div class="modalMedia" id="modalMedia"></div>
-    <div class="modalMeta">
-      <div id="modalTag">—</div>
-      <div>3sg.tn</div>
-    </div>
+ <div class="modalMedia" id="modalMedia"></div>
+
+<div class="modalNav">
+  <button class="modalNavBtn" id="modalPrev" type="button">Prev</button>
+  <div class="modalDots" id="modalDots"></div>
+  <button class="modalNavBtn" id="modalNext" type="button">Next</button>
+</div>
+
+<div class="modalMeta">
+  <div>
+    <div id="modalTag">—</div>
+    <div id="modalDetails" class="modalDetails">—</div>
+  </div>
+  <div>3sg.tn</div>
+</div>
   </div>
 </div>
 
@@ -755,67 +812,142 @@
     window.addEventListener('mouseup', function(){ document.documentElement.classList.remove('is-down'); });
   })();
 
-  // Fullscreen projects (modal)
-  (function(){
-    var modal = document.getElementById('modal');
-    var modalMedia = document.getElementById('modalMedia');
-    var modalTitle = document.getElementById('modalTitle');
-    var modalTag = document.getElementById('modalTag');
-    var closeBtn = document.getElementById('modalClose');
-    if (!modal || !modalMedia || !modalTitle || !modalTag || !closeBtn) return;
+ // Fullscreen projects (modal) + multi media (images/videos) + details
+(function(){
+  var modal = document.getElementById('modal');
+  var modalMedia = document.getElementById('modalMedia');
+  var modalTitle = document.getElementById('modalTitle');
+  var modalTag = document.getElementById('modalTag');
+  var modalDetails = document.getElementById('modalDetails');
+  var closeBtn = document.getElementById('modalClose');
 
-    function openModal(data){
-      modalMedia.innerHTML = '';
-      modalTitle.textContent = data.title || 'Project';
-      modalTag.textContent = data.tag || '';
+  var btnPrev = document.getElementById('modalPrev');
+  var btnNext = document.getElementById('modalNext');
+  var dotsWrap = document.getElementById('modalDots');
 
-      if (data.type === 'video'){
-        var v = document.createElement('video');
-        v.src = data.src;
-        if (data.poster) v.poster = data.poster;
-        v.autoplay = true;
-        v.muted = true;
-        v.loop = true;
-        v.playsInline = true;
-        v.controls = true;
-        modalMedia.appendChild(v);
-      } else {
-        var img = document.createElement('img');
-        img.src = data.src;
-        img.alt = data.title || '';
-        modalMedia.appendChild(img);
-      }
+  if (!modal || !modalMedia || !modalTitle || !modalTag || !modalDetails || !closeBtn) return;
 
-      modal.classList.add('is-open');
-      modal.setAttribute('aria-hidden','false');
-      document.body.style.overflow = 'hidden';
+  var items = [];
+  var index = 0;
+
+  function parseItems(str){
+    if (!str) return [];
+    return str.split('|').map(function(part){
+      var p = part.trim();
+      var i = p.indexOf(':');
+      if (i === -1) return null;
+      return { type: p.slice(0,i).trim(), src: p.slice(i+1).trim() };
+    }).filter(Boolean);
+  }
+
+  function renderDots(){
+    dotsWrap.innerHTML = '';
+    if (items.length <= 1) return;
+
+    items.forEach(function(_, i){
+      var d = document.createElement('span');
+      d.className = 'modalDot' + (i === index ? ' is-active' : '');
+      dotsWrap.appendChild(d);
+    });
+  }
+
+  function renderMedia(){
+    modalMedia.innerHTML = '';
+
+    var it = items[index];
+    if (!it) return;
+
+    if (it.type === 'video'){
+      var v = document.createElement('video');
+      v.src = it.src;
+      v.autoplay = true;
+      v.muted = true;
+      v.loop = true;
+      v.playsInline = true;
+      v.controls = true;
+      modalMedia.appendChild(v);
+    } else {
+      var img = document.createElement('img');
+      img.src = it.src;
+      img.alt = modalTitle.textContent || '';
+      modalMedia.appendChild(img);
     }
 
-    function closeModal(){
-      modal.classList.remove('is-open');
-      modal.setAttribute('aria-hidden','true');
-      modalMedia.innerHTML = '';
-      document.body.style.overflow = '';
-    }
+    // nav state
+    var multi = items.length > 1;
+    btnPrev.style.display = multi ? 'inline-flex' : 'none';
+    btnNext.style.display = multi ? 'inline-flex' : 'none';
+    dotsWrap.style.display = multi ? 'flex' : 'none';
 
-    document.querySelectorAll('[data-project]').forEach(function(card){
-      card.addEventListener('click', function(e){
-        e.preventDefault();
-        var data = {
-          title: card.getAttribute('data-title') || 'Project',
-          tag: card.getAttribute('data-tag') || '',
-          type: card.getAttribute('data-type') || 'image',
-          src: card.getAttribute('data-src') || '',
-          poster: card.getAttribute('data-poster') || ''
-        };
-        openModal(data);
+    btnPrev.disabled = (index === 0);
+    btnNext.disabled = (index === items.length - 1);
+
+    renderDots();
+  }
+
+  function openModal(data){
+    items = parseItems(data.items);
+    if (!items.length){
+      // fallback: old system (single)
+      items = [{ type: data.type || 'image', src: data.src || '' }];
+    }
+    index = 0;
+
+    modalTitle.textContent = data.title || 'Project';
+    modalTag.textContent = data.tag || '';
+    modalDetails.textContent = data.details || '';
+
+    renderMedia();
+
+    modal.classList.add('is-open');
+    modal.setAttribute('aria-hidden','false');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeModal(){
+    modal.classList.remove('is-open');
+    modal.setAttribute('aria-hidden','true');
+    modalMedia.innerHTML = '';
+    dotsWrap.innerHTML = '';
+    items = [];
+    index = 0;
+    document.body.style.overflow = '';
+  }
+
+  // Click cards
+  document.querySelectorAll('[data-project]').forEach(function(card){
+    card.addEventListener('click', function(e){
+      e.preventDefault();
+      openModal({
+        title: card.getAttribute('data-title') || 'Project',
+        tag: card.getAttribute('data-tag') || '',
+        details: card.getAttribute('data-details') || '',
+        items: card.getAttribute('data-items') || '',
+        type: card.getAttribute('data-type') || 'image',
+        src: card.getAttribute('data-src') || ''
       });
     });
+  });
 
-    closeBtn.addEventListener('click', closeModal);
-    modal.addEventListener('click', function(e){ if (e.target === modal) closeModal(); });
-    window.addEventListener('keydown', function(e){ if (e.key === 'Escape') closeModal(); });
-  })();
+  // Prev/Next
+  btnPrev.addEventListener('click', function(){
+    if (index > 0){ index--; renderMedia(); }
+  });
+  btnNext.addEventListener('click', function(){
+    if (index < items.length - 1){ index++; renderMedia(); }
+  });
+
+  // Close handlers
+  closeBtn.addEventListener('click', closeModal);
+  modal.addEventListener('click', function(e){ if (e.target === modal) closeModal(); });
+  window.addEventListener('keydown', function(e){
+    if (!modal.classList.contains('is-open')) return;
+    if (e.key === 'Escape') closeModal();
+    if (e.key === 'ArrowLeft' && index > 0){ index--; renderMedia(); }
+    if (e.key === 'ArrowRight' && index < items.length - 1){ index++; renderMedia(); }
+  });
+})();
+
 
   // Mobile menu
   (function(){
