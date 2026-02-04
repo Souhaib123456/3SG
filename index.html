@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3SG GROUP | The Work. The Result. Since 2002.</title>
+    
+    <meta name="description" content="3SG Group - Agence leader en Tunisie depuis 2002.">
+    <script src="https://unpkg.com/lenis@1.0.45/dist/lenis.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+
+    <style>
+        :root { --bg: #0d0d0d; --text: #ffffff; --primary: #e31e24; }
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-font-smoothing: antialiased; }
+        body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); overflow-x: hidden; }
+
+        /* NAVIGATION */
+        nav { position: fixed; top: 0; width: 100%; padding: 30px 5%; display: flex; justify-content: space-between; align-items: center; z-index: 1000; mix-blend-mode: difference; }
+        .logo img { height: 50px; width: auto; }
+        .nav-links { font-weight: 700; letter-spacing: 2px; font-size: 0.8rem; text-transform: uppercase; }
+
+        /* HERO */
+        .hero { height: 100vh; display: flex; flex-direction: column; justify-content: center; padding: 0 5%; }
+        .hero h1 { font-size: clamp(3.5rem, 12vw, 12rem); line-height: 0.85; font-weight: 900; text-transform: uppercase; letter-spacing: -0.06em; }
+        .outline { -webkit-text-stroke: 1px #fff; color: transparent; }
+
+        /* SHOWREEL 2026 */
+        .video-reel { width: 100%; height: 85vh; background: #000; position: relative; overflow: hidden; margin-bottom: 5vh; }
+        .video-reel video { width: 100%; height: 100%; object-fit: cover; opacity: 0.5; }
+        .reel-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center; z-index: 2; }
+        .reel-overlay h2 { font-size: clamp(2.5rem, 8vw, 6rem); font-weight: 900; text-transform: uppercase; }
+
+        /* GRILLE DYNAMIQUE (ANTI-TROUS) */
+        .work-grid { 
+            display: grid; 
+            grid-template-columns: repeat(2, 1fr); 
+            grid-auto-rows: 10px; /* Unités très fines pour un ajustement parfait */
+            gap: 15px; 
+            padding: 0 15px;
+        }
+        .project { position: relative; overflow: hidden; cursor: pointer; background: #151515; display: none; width: 100%; grid-row-end: span 20; }
+        .project img { width: 100%; height: 100%; object-fit: cover; transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1); filter: grayscale(1); opacity: 0.8; display: block; }
+        .project:hover img { transform: scale(1.05); filter: grayscale(0); opacity: 1; }
+        .project-info { position: absolute; bottom: 30px; left: 30px; pointer-events: none; z-index: 3; }
+        .project h3 { font-weight: 900; font-size: 2rem; text-transform: uppercase; text-shadow: 2px 2px 15px rgba(0,0,0,0.7); }
+        .project p { font-size: 0.75rem; color: var(--primary); font-weight: 700; letter-spacing: 1.5px; }
+
+        /* BOUTON CHARGEMENT */
+        .load-more-container { text-align: center; padding: 80px 0; }
+        #loadMoreBtn { background: transparent; border: 1px solid #fff; color: #fff; padding: 18px 45px; font-weight: 900; text-transform: uppercase; cursor: pointer; border-radius: 50px; transition: 0.3s; }
+        #loadMoreBtn:hover { background: #fff; color: #000; }
+
+        /* FOOTER */
+        footer { padding: 120px 5%; border-top: 1px solid #222; }
+        .social-links { margin-top: 40px; display: flex; gap: 25px; }
+        .social-links a { color: var(--text); text-decoration: none; font-size: 0.8rem; font-weight: 700; text-transform: uppercase; opacity: 0.4; }
+
+        @media (max-width: 900px) { .work-grid { grid-template-columns: 1fr; } }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <a href="#" class="logo"><img src="img/logo-3sg.png" alt="3SG Group"></a>
+        <div class="nav-links">WORK — AGENCY</div>
+    </nav>
+
+    <main>
+        <section class="hero">
+            <h1 class="gsap-reveal">THE WORK.</h1>
+            <h1 class="gsap-reveal outline">THE RESULT.</h1>
+            <h1 class="gsap-reveal" style="color: var(--primary);">SINCE 2002.</h1>
+        </section>
+
+        <section class="video-reel">
+            <video autoplay muted loop playsinline><source src="video/showreel.mp4" type="video/mp4"></video>
+            <div class="reel-overlay">
+                <p style="text-transform: uppercase; letter-spacing: 5px; font-size: 0.8rem; margin-bottom: 15px; opacity: 0.6;">Showreel 2026</p>
+                <h2 class="gsap-reveal">WATCH THE MAGIC</h2>
+            </div>
+        </section>
+
+        <section id="projects-container" class="work-grid"></section>
+
+        <div class="load-more-container">
+            <button id="loadMoreBtn">Voir plus de projets</button>
+        </div>
+
+        <footer>
+            <h2 style="font-size: 5vw; font-weight: 900; line-height: 1;">PRÊT POUR <br><span style="color: var(--primary);">LE RÉSULTAT ?</span></h2>
+            <div style="margin-top: 50px;">
+                <p>E. contact@3sg.tn</p>
+                <p>T. +216 71 656 015</p>
+            </div>
+            <div class="social-links">
+                <a href="https://www.facebook.com/3SGGROUP" target="_blank">Facebook</a>
+                <a href="https://www.linkedin.com/company/3sggroup" target="_blank">LinkedIn</a>
+            </div>
+        </footer>
+    </main>
+
+    <script>
+        // CONFIGURATION DES PROJETS (Ici vous gérez vos contenus)
+        const myProjects = [
+            { title: "Tunisie Telecom", category: "TELECOM", image: "https://images.unsplash.com/photo-1550741111-c80715d3dc9c?q=80&w=1200", ratio: 1.5 },
+            { title: "Pepsi", category: "CREATIVE", image: "https://images.unsplash.com/photo-1550399105-05c4a7641b02?q=80&w=1200", ratio: 1.2 },
+            { title: "MG", category: "RETAIL", image: "https://images.unsplash.com/photo-1534723452862-4c874018d66d?q=80&w=1200", ratio: 0.8 },
+            { title: "Lloyd", category: "ASSURANCE", image: "https://images.unsplash.com/photo-1450101499163-c8848c66ca85?q=80&w=1200", ratio: 1.1 },
+            { title: "Moulin d'Or", category: "AGRO", image: "https://images.unsplash.com/photo-1509440159596-0249088772ff?q=80&w=1200", ratio: 1.6 },
+            { title: "Lancement X", category: "DIGITAL", image: "https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=1200", ratio: 1.4 },
+            { title: "Campagne Été", category: "EVENT", image: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=1200", ratio: 1.3 }
+        ];
+
+        let projectsShown = 6;
+        const container = document.getElementById('projects-container');
+        const loadMoreBtn = document.getElementById('loadMoreBtn');
+
+        // Fonction pour calculer l'enjambement (span) et boucher les trous
+        function resizeGridItem(item){
+            const grid = document.getElementsByClassName("work-grid")[0];
+            const rowHeight = parseInt(window.getComputedStyle(grid).getPropertyValue('grid-auto-rows'));
+            const rowGap = parseInt(window.getComputedStyle(grid).getPropertyValue('grid-row-gap'));
+            const rowSpan = Math.ceil((item.querySelector('img').getBoundingClientRect().height + rowGap) / (rowHeight + rowGap));
+            item.style.gridRowEnd = "span " + rowSpan;
+        }
+
+        function renderProjects() {
+            container.innerHTML = '';
+            myProjects.forEach((proj, index) => {
+                const div = document.createElement('div');
+                div.className = `project`;
+                if (index < projectsShown) div.style.display = 'block';
+                div.innerHTML = `<img src="${proj.image}" onload="resizeGridItem(this.parentElement)"><div class="project-info"><h3>${proj.title}</h3><p>${proj.category}</p></div>`;
+                container.appendChild(div);
+            });
+            if (projectsShown >= myProjects.length) loadMoreBtn.style.display = 'none';
+        }
+
+        loadMoreBtn.addEventListener('click', () => { 
+            projectsShown += 4; 
+            renderProjects(); 
+            gsap.from(".project", { opacity: 0, y: 30, duration: 0.5, stagger: 0.1 }); 
+        });
+
+        // Initialisation
+        window.onload = renderProjects;
+        window.addEventListener('resize', () => {
+            const items = document.getElementsByClassName('project');
+            for(let i=0; i<items.length; i++) { resizeGridItem(items[i]); }
+        });
+
+        const lenis = new Lenis();
+        function raf(time) { lenis.raf(time); requestAnimationFrame(raf); }
+        requestAnimationFrame(raf);
+        gsap.from(".gsap-reveal", { y: 100, opacity: 0, duration: 1.5, stagger: 0.2, ease: "power4.out" });
+    </script>
+</body>
+</html>
