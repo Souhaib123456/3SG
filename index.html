@@ -17,8 +17,8 @@
         
         body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); overflow-x: hidden; }
 
-        /* NAVIGATION */
-        nav { position: fixed; top: 0; width: 100%; padding: 30px 5%; display: flex; justify-content: space-between; align-items: center; z-index: 1000; mix-blend-mode: difference; }
+        /* NAVIGATION (ANIMABLE) */
+        nav { position: fixed; top: 0; width: 100%; padding: 30px 5%; display: flex; justify-content: space-between; align-items: center; z-index: 1000; mix-blend-mode: difference; transition: transform 0.4s ease; }
         .logo img { height: 50px; width: auto; }
         .nav-links { font-weight: 700; letter-spacing: 2px; font-size: 0.8rem; text-transform: uppercase; }
 
@@ -33,14 +33,8 @@
         .reel-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center; z-index: 2; text-align: center; }
         .reel-overlay h2 { font-size: clamp(2.5rem, 8vw, 6rem); font-weight: 900; text-transform: uppercase; line-height: 1; }
 
-        /* GRILLE MASONRY INTELLIGENTE */
-        .work-grid { 
-            display: grid; 
-            grid-template-columns: repeat(2, 1fr); 
-            grid-auto-rows: 10px; 
-            gap: 15px; 
-            padding: 0 15px;
-        }
+        /* GRILLE MASONRY DYNAMIQUE */
+        .work-grid { display: grid; grid-template-columns: repeat(2, 1fr); grid-auto-rows: 10px; gap: 15px; padding: 0 15px; }
         .project { position: relative; overflow: hidden; cursor: pointer; background: #151515; display: none; width: 100%; }
         .project img { width: 100%; height: auto; transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1); filter: grayscale(1); opacity: 0.8; display: block; }
         .project:hover img { transform: scale(1.05); filter: grayscale(0); opacity: 1; }
@@ -48,15 +42,9 @@
         .project h3 { font-weight: 900; font-size: clamp(1.2rem, 3vw, 2rem); text-transform: uppercase; text-shadow: 2px 2px 15px rgba(0,0,0,0.7); }
         .project p { font-size: 0.75rem; color: var(--primary); font-weight: 700; letter-spacing: 1.5px; }
 
-        /* PANEL DETAILS (FIXED SCROLL) */
-        #project-detail { 
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
-            background: var(--bg); z-index: 2000; visibility: hidden; 
-            padding: 120px 8% 50px; overflow-y: auto; /* Permet le défilement interne */
-            -webkit-overflow-scrolling: touch;
-            transform: translateY(100%); 
-        }
-        .close-detail { position: fixed; top: 40px; right: 50px; cursor: pointer; font-weight: 900; border: 1px solid #fff; padding: 12px 30px; border-radius: 50px; z-index: 2100; transition: 0.3s; background: rgba(0,0,0,0.5); }
+        /* PANEL DETAILS */
+        #project-detail { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--bg); z-index: 2000; visibility: hidden; padding: 120px 8% 50px; overflow-y: auto; -webkit-overflow-scrolling: touch; transform: translateY(100%); }
+        .close-detail { position: fixed; top: 40px; right: 50px; cursor: pointer; font-weight: 900; border: 1px solid #fff; padding: 12px 30px; border-radius: 50px; z-index: 2100; background: rgba(0,0,0,0.5); }
         .close-detail:hover { background: #fff; color: #000; }
         .media-viewer { margin-top: 50px; width: 100%; }
         .media-viewer img, .media-viewer video { width: 100%; margin-bottom: 25px; border-radius: 4px; display: block; }
@@ -81,7 +69,7 @@
 </head>
 <body>
 
-    <nav>
+    <nav id="main-nav">
         <a href="#" class="logo"><img src="img/logo-3sg.png" alt="3SG Group"></a>
         <div class="nav-links">WORK — AGENCY</div>
     </nav>
@@ -129,7 +117,7 @@
     </div>
 
     <script>
-        // 1. CONFIGURATION DES PROJETS
+        // 1. CONFIGURATION
         const myProjects = [
             { title: "Tunisie Telecom", category: "TELECOM", image: "https://images.unsplash.com/photo-1550741111-c80715d3dc9c?q=80&w=1200", desc: "Campagne stratégique 360° pour l'opérateur national." },
             { 
@@ -149,8 +137,9 @@
         let projectsShown = 6;
         const container = document.getElementById('projects-container');
         const loadMoreBtn = document.getElementById('loadMoreBtn');
+        const nav = document.getElementById('main-nav');
 
-        // 2. LOGIQUE MASONRY (ANTI-TROUS)
+        // 2. MASONRY LOGIC
         function resizeGridItem(item){
             const grid = document.querySelector(".work-grid");
             const rowHeight = parseInt(window.getComputedStyle(grid).getPropertyValue('grid-auto-rows'));
@@ -165,56 +154,50 @@
                 const div = document.createElement('div');
                 div.className = `project`;
                 if (index < projectsShown) div.style.display = 'block';
-                
                 div.onclick = () => openProject(proj.title, proj.desc, proj.detailVideo, proj.image);
-                
-                div.innerHTML = `
-                    <img src="${proj.image}" onload="resizeGridItem(this.parentElement)">
-                    <div class="project-info">
-                        <h3>${proj.title}</h3>
-                        <p>${proj.category}</p>
-                    </div>
-                `;
+                div.innerHTML = `<img src="${proj.image}" onload="resizeGridItem(this.parentElement)"><div class="project-info"><h3>${proj.title}</h3><p>${proj.category}</p></div>`;
                 container.appendChild(div);
             });
             if (projectsShown >= myProjects.length) loadMoreBtn.style.display = 'none';
         }
 
-        // 3. LOGIQUE DÉTAILS & SCROLL
+        // 3. NAVIGATION HIDE/SHOW ON SCROLL
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 100) {
+                gsap.to(nav, { opacity: 0, y: -20, duration: 0.4, ease: "power2.out", pointerEvents: "none" });
+            } else {
+                gsap.to(nav, { opacity: 1, y: 0, duration: 0.4, ease: "power2.out", pointerEvents: "auto" });
+            }
+        });
+
+        // 4. DETAILS & SCROLL
         function openProject(title, desc, video, img) {
             const detailPanel = document.getElementById('project-detail');
-            detailPanel.scrollTop = 0; // Remonte au début
-
+            detailPanel.scrollTop = 0;
             document.getElementById('detail-title').innerText = title;
             document.getElementById('detail-desc').innerText = desc || "";
             const viewer = document.querySelector('.media-viewer');
             viewer.innerHTML = '';
-
-            if(video) {
-                viewer.innerHTML += `<video controls autoplay muted playsinline><source src="${video}" type="video/mp4"></video>`;
-            }
-            if(img) {
-                viewer.innerHTML += `<img src="${img}" alt="${title}">`;
-            }
-
+            if(video) viewer.innerHTML += `<video controls autoplay muted playsinline><source src="${video}" type="video/mp4"></video>`;
+            if(img) viewer.innerHTML += `<img src="${img}" alt="${title}">`;
             gsap.to("#project-detail", { visibility: "visible", y: 0, duration: 0.8, ease: "expo.out" });
-            lenis.stop(); // Stoppe le défilement du fond
+            lenis.stop();
         }
 
         function closeProject() {
             const video = document.querySelector('.media-viewer video');
             if(video) video.pause();
-
-            gsap.to("#project-detail", { 
-                y: "100%", duration: 0.6, ease: "expo.in", 
-                onComplete: () => {
-                    document.getElementById('project-detail').style.visibility = "hidden";
-                    lenis.start(); // Relance le défilement du fond
-                }
-            });
+            gsap.to("#project-detail", { y: "100%", duration: 0.6, ease: "expo.in", onComplete: () => {
+                document.getElementById('project-detail').style.visibility = "hidden";
+                lenis.start();
+            }});
         }
 
-        // 4. EVENTS
+        // 5. INIT
+        const lenis = new Lenis();
+        function raf(time) { lenis.raf(time); requestAnimationFrame(raf); }
+        requestAnimationFrame(raf);
+
         loadMoreBtn.addEventListener('click', () => { 
             projectsShown += 4; 
             renderProjects(); 
@@ -225,11 +208,6 @@
         window.addEventListener('resize', () => {
             document.querySelectorAll('.project').forEach(item => resizeGridItem(item));
         });
-
-        // Init Lenis
-        const lenis = new Lenis();
-        function raf(time) { lenis.raf(time); requestAnimationFrame(raf); }
-        requestAnimationFrame(raf);
 
         gsap.from(".gsap-reveal", { y: 100, opacity: 0, duration: 1.5, stagger: 0.2, ease: "power4.out" });
     </script>
