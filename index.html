@@ -5,7 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>3SG GROUP | The Work. The Result. Since 2002.</title>
     
-    <meta name="description" content="3SG Group - Agence leader en Tunisie depuis 2002.">
+    <meta name="description" content="3SG Group - Agence leader en Tunisie depuis 2002. Expertise pour Tunisie Telecom, Pepsi, MG, Lloyd et Moulin d'Or.">
+    
     <script src="https://unpkg.com/lenis@1.0.45/dist/lenis.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
@@ -13,6 +14,7 @@
     <style>
         :root { --bg: #0d0d0d; --text: #ffffff; --primary: #e31e24; }
         * { margin: 0; padding: 0; box-sizing: border-box; -webkit-font-smoothing: antialiased; }
+        
         body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); overflow-x: hidden; }
 
         /* NAVIGATION */
@@ -28,38 +30,53 @@
         /* SHOWREEL */
         .video-reel { width: 100%; height: 85vh; background: #000; position: relative; overflow: hidden; margin-bottom: 5vh; }
         .video-reel video { width: 100%; height: 100%; object-fit: cover; opacity: 0.5; }
-        .reel-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center; z-index: 2; }
-        .reel-overlay h2 { font-size: clamp(2.5rem, 8vw, 6rem); font-weight: 900; text-transform: uppercase; }
+        .reel-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center; z-index: 2; text-align: center; }
+        .reel-overlay h2 { font-size: clamp(2.5rem, 8vw, 6rem); font-weight: 900; text-transform: uppercase; line-height: 1; }
 
-        /* GRILLE */
-        .work-grid { display: grid; grid-template-columns: repeat(2, 1fr); grid-auto-rows: 10px; gap: 15px; padding: 0 15px; }
+        /* GRILLE MASONRY INTELLIGENTE */
+        .work-grid { 
+            display: grid; 
+            grid-template-columns: repeat(2, 1fr); 
+            grid-auto-rows: 10px; 
+            gap: 15px; 
+            padding: 0 15px;
+        }
         .project { position: relative; overflow: hidden; cursor: pointer; background: #151515; display: none; width: 100%; }
         .project img { width: 100%; height: auto; transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1); filter: grayscale(1); opacity: 0.8; display: block; }
         .project:hover img { transform: scale(1.05); filter: grayscale(0); opacity: 1; }
         .project-info { position: absolute; bottom: 30px; left: 30px; pointer-events: none; z-index: 3; }
-        .project h3 { font-weight: 900; font-size: 2rem; text-transform: uppercase; text-shadow: 2px 2px 15px rgba(0,0,0,0.7); }
+        .project h3 { font-weight: 900; font-size: clamp(1.2rem, 3vw, 2rem); text-transform: uppercase; text-shadow: 2px 2px 15px rgba(0,0,0,0.7); }
         .project p { font-size: 0.75rem; color: var(--primary); font-weight: 700; letter-spacing: 1.5px; }
 
-        /* PANEL DETAILS */
+        /* PANEL DETAILS (FIXED SCROLL) */
         #project-detail { 
             position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
             background: var(--bg); z-index: 2000; visibility: hidden; 
-            padding: 120px 8% 50px; overflow-y: auto; transform: translateY(100%); 
+            padding: 120px 8% 50px; overflow-y: auto; /* Permet le défilement interne */
+            -webkit-overflow-scrolling: touch;
+            transform: translateY(100%); 
         }
-        .close-detail { position: fixed; top: 40px; right: 50px; cursor: pointer; font-weight: 900; border: 1px solid #fff; padding: 12px 30px; border-radius: 50px; z-index: 2100; transition: 0.3s; }
+        .close-detail { position: fixed; top: 40px; right: 50px; cursor: pointer; font-weight: 900; border: 1px solid #fff; padding: 12px 30px; border-radius: 50px; z-index: 2100; transition: 0.3s; background: rgba(0,0,0,0.5); }
         .close-detail:hover { background: #fff; color: #000; }
         .media-viewer { margin-top: 50px; width: 100%; }
-        .media-viewer img, .media-viewer video { width: 100%; margin-bottom: 25px; border-radius: 5px; }
+        .media-viewer img, .media-viewer video { width: 100%; margin-bottom: 25px; border-radius: 4px; display: block; }
 
-        #loadMoreBtn { background: transparent; border: 1px solid #fff; color: #fff; padding: 18px 45px; font-weight: 900; text-transform: uppercase; cursor: pointer; border-radius: 50px; transition: 0.3s; margin: 80px 0; }
+        /* VOIR PLUS */
+        .load-more-container { text-align: center; padding: 60px 0; }
+        #loadMoreBtn { background: transparent; border: 1px solid #fff; color: #fff; padding: 18px 45px; font-weight: 900; text-transform: uppercase; cursor: pointer; border-radius: 50px; transition: 0.3s; }
         #loadMoreBtn:hover { background: #fff; color: #000; }
-        .load-more-container { text-align: center; }
 
-        footer { padding: 120px 5%; border-top: 1px solid #222; }
+        /* FOOTER */
+        footer { padding: 120px 5%; border-top: 1px solid #222; margin-top: 5vh; }
         .social-links { margin-top: 40px; display: flex; gap: 25px; }
-        .social-links a { color: var(--text); text-decoration: none; font-size: 0.8rem; font-weight: 700; text-transform: uppercase; opacity: 0.4; }
+        .social-links a { color: var(--text); text-decoration: none; font-size: 0.8rem; font-weight: 700; text-transform: uppercase; opacity: 0.4; transition: 0.3s; }
+        .social-links a:hover { opacity: 1; color: var(--primary); }
 
-        @media (max-width: 900px) { .work-grid { grid-template-columns: 1fr; } }
+        @media (max-width: 900px) { 
+            .work-grid { grid-template-columns: 1fr; } 
+            .hero h1 { font-size: 18vw; }
+            .close-detail { right: 20px; top: 20px; padding: 10px 20px; }
+        }
     </style>
 </head>
 <body>
@@ -91,19 +108,20 @@
         </div>
 
         <footer>
-            <h2 style="font-size: 5vw; font-weight: 900; line-height: 1;">PRÊT POUR <br><span style="color: var(--primary);">LE RÉSULTAT ?</span></h2>
-            <div style="margin-top: 50px;">
+            <h2 style="font-size: clamp(2rem, 5vw, 5rem); font-weight: 900; line-height: 1;">PRÊT POUR <br><span style="color: var(--primary);">LE RÉSULTAT ?</span></h2>
+            <div style="margin-top: 40px;">
                 <p>E. contact@3sg.tn</p>
                 <p>T. +216 71 656 015</p>
             </div>
             <div class="social-links">
                 <a href="https://www.facebook.com/3SGGROUP" target="_blank">Facebook</a>
                 <a href="https://www.linkedin.com/company/3sggroup" target="_blank">LinkedIn</a>
+                <a href="https://www.youtube.com/@3SGGroup" target="_blank">YouTube</a>
             </div>
         </footer>
     </main>
 
-    <div id="project-detail">
+    <div id="project-detail" data-lenis-prevent>
         <div class="close-detail" onclick="closeProject()">FERMER ✕</div>
         <h1 id="detail-title" style="font-size: clamp(2.5rem, 6vw, 5rem); text-transform: uppercase; color: var(--primary); font-weight: 900; line-height: 0.9;"></h1>
         <p id="detail-desc" style="font-size: 1.2rem; margin-top: 30px; max-width: 800px; opacity: 0.8; line-height: 1.5;"></p>
@@ -111,6 +129,7 @@
     </div>
 
     <script>
+        // 1. CONFIGURATION DES PROJETS
         const myProjects = [
             { title: "Tunisie Telecom", category: "TELECOM", image: "https://images.unsplash.com/photo-1550741111-c80715d3dc9c?q=80&w=1200", desc: "Campagne stratégique 360° pour l'opérateur national." },
             { 
@@ -118,19 +137,20 @@
                 category: "CREATIVE", 
                 image: "https://images.unsplash.com/photo-1550399105-05c4a7641b02?q=80&w=1200", 
                 desc: "Campagne créative Pepsi : Activation de marque et contenu digital percutant.", 
-                detailVideo: "video/Hand_Opens_Can_Video_Generated.mp4" 
+                detailVideo: "video/pepsi.mp4" 
             },
-            { title: "MG", category: "RETAIL", image: "https://images.unsplash.com/photo-1534723452862-4c874018d66d?q=80&w=1200", desc: "Modernisation de l'image de marque retail." },
-            { title: "Lloyd", category: "ASSURANCE", image: "https://images.unsplash.com/photo-1450101499163-c8848c66ca85?q=80&w=1200", desc: "Communication basée sur la confiance." },
-            { title: "Moulin d'Or", category: "AGRO", image: "https://images.unsplash.com/photo-1509440159596-0249088772ff?q=80&w=1200", desc: "Branding et packaging agroalimentaire." },
-            { title: "Lancement X", category: "DIGITAL", image: "https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=1200", desc: "Stratégie de lancement digital complète." },
-            { title: "Campagne Été", category: "EVENT", image: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=1200", desc: "Activation événementielle estivale." }
+            { title: "MG", category: "RETAIL", image: "https://images.unsplash.com/photo-1534723452862-4c874018d66d?q=80&w=1200", desc: "Modernisation de l'image Magasin Général." },
+            { title: "Lloyd", category: "ASSURANCE", image: "https://images.unsplash.com/photo-1450101499163-c8848c66ca85?q=80&w=1200", desc: "Stratégie de communication Lloyd Assurances." },
+            { title: "Moulin d'Or", category: "AGRO", image: "https://images.unsplash.com/photo-1509440159596-0249088772ff?q=80&w=1200", desc: "Campagnes gourmandes et branding Moulin d'Or." },
+            { title: "Lancement X", category: "DIGITAL", image: "https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=1200", desc: "Déploiement digital innovant." },
+            { title: "Campagne Été", category: "EVENT", image: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=1200", desc: "Activation terrain et digitale pour l'été." }
         ];
 
         let projectsShown = 6;
         const container = document.getElementById('projects-container');
         const loadMoreBtn = document.getElementById('loadMoreBtn');
 
+        // 2. LOGIQUE MASONRY (ANTI-TROUS)
         function resizeGridItem(item){
             const grid = document.querySelector(".work-grid");
             const rowHeight = parseInt(window.getComputedStyle(grid).getPropertyValue('grid-auto-rows'));
@@ -146,7 +166,6 @@
                 div.className = `project`;
                 if (index < projectsShown) div.style.display = 'block';
                 
-                // On ajoute l'événement de clic ICI
                 div.onclick = () => openProject(proj.title, proj.desc, proj.detailVideo, proj.image);
                 
                 div.innerHTML = `
@@ -161,33 +180,41 @@
             if (projectsShown >= myProjects.length) loadMoreBtn.style.display = 'none';
         }
 
+        // 3. LOGIQUE DÉTAILS & SCROLL
         function openProject(title, desc, video, img) {
+            const detailPanel = document.getElementById('project-detail');
+            detailPanel.scrollTop = 0; // Remonte au début
+
             document.getElementById('detail-title').innerText = title;
-            document.getElementById('detail-desc').innerText = desc || "Détails du projet à venir.";
+            document.getElementById('detail-desc').innerText = desc || "";
             const viewer = document.querySelector('.media-viewer');
             viewer.innerHTML = '';
 
             if(video) {
-                viewer.innerHTML += `<video controls autoplay muted><source src="${video}" type="video/mp4"></video>`;
-            } else if(img) {
+                viewer.innerHTML += `<video controls autoplay muted playsinline><source src="${video}" type="video/mp4"></video>`;
+            }
+            if(img) {
                 viewer.innerHTML += `<img src="${img}" alt="${title}">`;
             }
 
             gsap.to("#project-detail", { visibility: "visible", y: 0, duration: 0.8, ease: "expo.out" });
-            lenis.stop();
+            lenis.stop(); // Stoppe le défilement du fond
         }
 
         function closeProject() {
-            // Arrêter la vidéo si elle joue lors de la fermeture
             const video = document.querySelector('.media-viewer video');
             if(video) video.pause();
 
-            gsap.to("#project-detail", { y: "100%", duration: 0.6, ease: "expo.in", onComplete: () => {
-                document.getElementById('project-detail').style.visibility = "hidden";
-            }});
-            lenis.start();
+            gsap.to("#project-detail", { 
+                y: "100%", duration: 0.6, ease: "expo.in", 
+                onComplete: () => {
+                    document.getElementById('project-detail').style.visibility = "hidden";
+                    lenis.start(); // Relance le défilement du fond
+                }
+            });
         }
 
+        // 4. EVENTS
         loadMoreBtn.addEventListener('click', () => { 
             projectsShown += 4; 
             renderProjects(); 
@@ -199,9 +226,11 @@
             document.querySelectorAll('.project').forEach(item => resizeGridItem(item));
         });
 
+        // Init Lenis
         const lenis = new Lenis();
         function raf(time) { lenis.raf(time); requestAnimationFrame(raf); }
         requestAnimationFrame(raf);
+
         gsap.from(".gsap-reveal", { y: 100, opacity: 0, duration: 1.5, stagger: 0.2, ease: "power4.out" });
     </script>
 </body>
