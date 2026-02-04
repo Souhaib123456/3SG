@@ -104,7 +104,11 @@
         // CONFIGURATION DES PROJETS (Ici vous gérez vos contenus)
         const myProjects = [
             { title: "Tunisie Telecom", category: "TELECOM", image: "https://images.unsplash.com/photo-1550741111-c80715d3dc9c?q=80&w=1200", ratio: 1.5 },
-            { title: "Pepsi", category: "CREATIVE", image: "https://images.unsplash.com/photo-1550399105-05c4a7641b02?q=80&w=1200", ratio: 1.2 },
+            
+            { title: "Pepsi", category: "CREATIVE", image: "https://images.unsplash.com/photo-1550399105-05c4a7641b02?q=80&w=1200", ratio: 1.2 ,desc: "Campagne créative Pepsi : Activation de marque et contenu digital percutant.", 
+  detailVideo: "video/Hand_Opens_Can_Video_Generated.mp4"},
+
+            
             { title: "MG", category: "RETAIL", image: "https://images.unsplash.com/photo-1534723452862-4c874018d66d?q=80&w=1200", ratio: 0.8 },
             { title: "Lloyd", category: "ASSURANCE", image: "https://images.unsplash.com/photo-1450101499163-c8848c66ca85?q=80&w=1200", ratio: 1.1 },
             { title: "Moulin d'Or", category: "AGRO", image: "https://images.unsplash.com/photo-1509440159596-0249088772ff?q=80&w=1200", ratio: 1.6 },
@@ -156,4 +160,5 @@
         gsap.from(".gsap-reveal", { y: 100, opacity: 0, duration: 1.5, stagger: 0.2, ease: "power4.out" });
     </script>
 </body>
+
 </html>
