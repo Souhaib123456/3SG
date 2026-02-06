@@ -43,81 +43,25 @@
         .project h3 { font-weight: 900; font-size: clamp(1.2rem, 3vw, 2rem); text-transform: uppercase; text-shadow: 2px 2px 15px rgba(0,0,0,0.7); }
         .project p { font-size: 0.75rem; color: var(--primary); font-weight: 700; letter-spacing: 1.5px; }
 
-       /* SECTION ECOSYSTEM - VERSION ÉCLAIRCIE */
-.ecosystem-section { 
-    padding: 100px 5%; 
-    border-top: 1px solid #222; 
-    background: #111111; /* Un gris anthracite plus doux que le noir pur */
-}
+      /* ECOSYSTEM SECTION */
 
-.ecosystem-grid { 
-    display: grid; 
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); 
-    gap: 30px; 
-}
+        .ecosystem-section { padding: 100px 5%; border-top: 1px solid #222; background: #0a0a0a; }
 
-.partner-card { 
-    text-decoration: none; 
-    color: var(--text); 
-    /* Fond plus clair avec une légère transparence */
-    background: rgba(255, 255, 255, 0.03); 
-    padding: 40px 30px; 
-    border-radius: 12px; /* Arrondi plus moderne */
-    transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1); 
-    /* Bordure subtile pour faire ressortir la carte */
-    border: 1px solid rgba(255, 255, 255, 0.08); 
-    display: flex; 
-    flex-direction: column; 
-    align-items: center; 
-    text-align: center; 
-    backdrop-filter: blur(10px); /* Effet de verre */
-}
+        .ecosystem-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 30px; }
 
-.partner-card:hover { 
-    background: rgba(255, 255, 255, 0.07); 
-    border-color: var(--primary); 
-    transform: translateY(-10px);
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3); /* Ombre pour donner de la profondeur */
-}
+        .partner-card { text-decoration: none; color: var(--text); background: #111; padding: 40px 30px; border-radius: 4px; transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1); border: 1px solid transparent; display: flex; flex-direction: column; align-items: center; text-align: center; }
 
-.partner-logo { 
-    height: 60px; 
-    margin-bottom: 25px; 
-    display: flex; 
-    align-items: center; 
-    justify-content: center; 
-    /* On garde le blanc mais on augmente l'opacité */
-    filter: grayscale(1) brightness(3); 
-    opacity: 0.7;
-    transition: all 0.4s ease; 
-}
+        .partner-card:hover { background: #151515; border-color: var(--primary); transform: translateY(-10px); }
 
-.partner-card:hover .partner-logo { 
-    filter: grayscale(0) brightness(1); 
-    opacity: 1;
-}
+        .partner-logo { height: 60px; margin-bottom: 25px; display: flex; align-items: center; justify-content: center; filter: grayscale(1) brightness(2); transition: filter 0.3s ease; }
 
-.partner-logo img { 
-    max-height: 100%; 
-    max-width: 180px;
-    width: auto; 
-}
+        .partner-card:hover .partner-logo { filter: grayscale(0) brightness(1); }
 
-.partner-info h3 { 
-    font-size: 1rem; 
-    font-weight: 900; 
-    letter-spacing: 1px; 
-    margin-bottom: 8px; 
-    color: #f0f0f0; /* Texte légèrement cassé pour la douceur */
-}
+        .partner-logo img { max-height: 100%; width: auto; }
 
-.partner-info p { 
-    font-size: 0.7rem; 
-    opacity: 0.6; 
-    text-transform: uppercase; 
-    letter-spacing: 2px; 
-    color: var(--primary); /* Met en avant la spécialité avec la couleur de l'agence */
-}
+        .partner-info h3 { font-size: 1rem; font-weight: 900; letter-spacing: 1px; margin-bottom: 5px; }
+
+        .partner-info p { font-size: 0.7rem; opacity: 0.5; text-transform: uppercase; letter-spacing: 1px; }
 
         /* DETAILS PANEL */
         #project-detail { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--bg); z-index: 2000; visibility: hidden; padding: 120px 8% 50px; overflow-y: auto; -webkit-overflow-scrolling: touch; transform: translateY(100%); }
@@ -280,6 +224,7 @@
     </script>
 </body>
 </html>
+
 
 
 
