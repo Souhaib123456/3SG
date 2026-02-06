@@ -5,10 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>3SG GROUP | The Work. The Result. Since 2002.</title>
     
-    <meta name="description" content="3SG Group - Agence leader en Tunisie depuis 2002. Expertise pour Tunisie Telecom, Pepsi, MG, Lloyd et Moulin d'Or.">
+    <meta name="description" content="3SG Group - Agence leader en Tunisie depuis 2002. Expertise pour Tunisie Telecom, Pepsi, MG, Lloyd et filiales Ykone, OMD, 3P, Creative Adschool.">
     
     <script src="https://unpkg.com/lenis@1.0.45/dist/lenis.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
 
     <style>
@@ -17,8 +18,8 @@
         
         body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); overflow-x: hidden; }
 
-        /* NAVIGATION (ANIMABLE) */
-        nav { position: fixed; top: 0; width: 100%; padding: 30px 5%; display: flex; justify-content: space-between; align-items: center; z-index: 1000; mix-blend-mode: difference; transition: transform 0.4s ease; }
+        /* NAVIGATION */
+        nav { position: fixed; top: 0; width: 100%; padding: 30px 5%; display: flex; justify-content: space-between; align-items: center; z-index: 1000; mix-blend-mode: difference; }
         .logo img { height: 50px; width: auto; }
         .nav-links { font-weight: 700; letter-spacing: 2px; font-size: 0.8rem; text-transform: uppercase; }
 
@@ -28,13 +29,13 @@
         .outline { -webkit-text-stroke: 1px #fff; color: transparent; }
 
         /* SHOWREEL */
-        .video-reel { width: 100%; height: 85vh; background: #000; position: relative; overflow: hidden; margin-bottom: 5vh; }
+        .video-reel { width: 100%; height: 85vh; background: #000; position: relative; overflow: hidden; margin: 5vh 0; }
         .video-reel video { width: 100%; height: 100%; object-fit: cover; opacity: 0.5; }
         .reel-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center; z-index: 2; text-align: center; }
         .reel-overlay h2 { font-size: clamp(2.5rem, 8vw, 6rem); font-weight: 900; text-transform: uppercase; line-height: 1; }
 
-        /* GRILLE MASONRY DYNAMIQUE */
-        .work-grid { display: grid; grid-template-columns: repeat(2, 1fr); grid-auto-rows: 10px; gap: 15px; padding: 0 15px; }
+        /* GRILLE MASONRY */
+        .work-grid { display: grid; grid-template-columns: repeat(2, 1fr); grid-auto-rows: 10px; gap: 15px; padding: 0 15px; grid-auto-flow: dense; }
         .project { position: relative; overflow: hidden; cursor: pointer; background: #151515; display: none; width: 100%; }
         .project img { width: 100%; height: auto; transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1); filter: grayscale(1); opacity: 0.8; display: block; }
         .project:hover img { transform: scale(1.05); filter: grayscale(0); opacity: 1; }
@@ -42,75 +43,33 @@
         .project h3 { font-weight: 900; font-size: clamp(1.2rem, 3vw, 2rem); text-transform: uppercase; text-shadow: 2px 2px 15px rgba(0,0,0,0.7); }
         .project p { font-size: 0.75rem; color: var(--primary); font-weight: 700; letter-spacing: 1.5px; }
 
-        /* PANEL DETAILS */
+        /* ECOSYSTEM SECTION */
+        .ecosystem-section { padding: 100px 5%; border-top: 1px solid #222; background: #0a0a0a; }
+        .ecosystem-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 30px; }
+        .partner-card { text-decoration: none; color: var(--text); background: #111; padding: 40px 30px; border-radius: 4px; transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1); border: 1px solid transparent; display: flex; flex-direction: column; align-items: center; text-align: center; }
+        .partner-card:hover { background: #151515; border-color: var(--primary); transform: translateY(-10px); }
+        .partner-logo { height: 60px; margin-bottom: 25px; display: flex; align-items: center; justify-content: center; filter: grayscale(1) brightness(2); transition: filter 0.3s ease; }
+        .partner-card:hover .partner-logo { filter: grayscale(0) brightness(1); }
+        .partner-logo img { max-height: 100%; width: auto; }
+        .partner-info h3 { font-size: 1rem; font-weight: 900; letter-spacing: 1px; margin-bottom: 5px; }
+        .partner-info p { font-size: 0.7rem; opacity: 0.5; text-transform: uppercase; letter-spacing: 1px; }
+
+        /* DETAILS PANEL */
         #project-detail { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--bg); z-index: 2000; visibility: hidden; padding: 120px 8% 50px; overflow-y: auto; -webkit-overflow-scrolling: touch; transform: translateY(100%); }
-        .close-detail { position: fixed; top: 40px; right: 50px; cursor: pointer; font-weight: 900; border: 1px solid #fff; padding: 12px 30px; border-radius: 50px; z-index: 2100; background: rgba(0,0,0,0.5); }
+        .close-detail { position: fixed; top: 40px; right: 50px; cursor: pointer; font-weight: 900; border: 1px solid #fff; padding: 12px 30px; border-radius: 50px; z-index: 2100; transition: 0.3s; background: rgba(0,0,0,0.5); }
         .close-detail:hover { background: #fff; color: #000; }
         .media-viewer { margin-top: 50px; width: 100%; }
         .media-viewer img, .media-viewer video { width: 100%; margin-bottom: 25px; border-radius: 4px; display: block; }
 
-        /* VOIR PLUS */
+        /* VOIR PLUS & FOOTER */
         .load-more-container { text-align: center; padding: 60px 0; }
         #loadMoreBtn { background: transparent; border: 1px solid #fff; color: #fff; padding: 18px 45px; font-weight: 900; text-transform: uppercase; cursor: pointer; border-radius: 50px; transition: 0.3s; }
         #loadMoreBtn:hover { background: #fff; color: #000; }
-<section class="ecosystem-section">
-    <div class="container">
-        <h2 class="gsap-reveal outline" style="font-size: clamp(2rem, 5vw, 4rem); margin-bottom: 50px;">OUR ECOSYSTEM.</h2>
-        
-        <div class="ecosystem-grid">
-            <a href="https://ykone.com/influencer-marketing-agency-tunis/" target="_blank" class="partner-card">
-                <div class="partner-logo">
-                    <img src="img/ykone-logo.png" alt="Ykone Tunisie">
-                </div>
-                <div class="partner-info">
-                    <h3>YKONE TUNISIE</h3>
-                    <p>Influencer Marketing Agency</p>
-                </div>
-            </a>
-
-            <a href="https://www.omd.com/" target="_blank" class="partner-card">
-                <div class="partner-logo">
-                    <img src="img/omd-logo.png" alt="OMD Creative">
-                </div>
-                <div class="partner-info">
-                    <h3>OMD TUNISIE</h3>
-                    <p>Media & Strategic Planning</p>
-                </div>
-            </a>
-
-            <a href="https://3-p.tn/" target="_blank" class="partner-card">
-                <div class="partner-logo">
-                    <img src="img/3p-logo.png" alt="3P">
-                </div>
-                <div class="partner-info">
-                    <h3>3P</h3>
-                    <p>Production & Events</p>
-                </div>
-            </a>
-
-            <a href="https://www.creativeadschool.com/" target="_blank" class="partner-card">
-                <div class="partner-logo">
-                    <img src="img/adschool-logo.png" alt="Creative Adschool">
-                </div>
-                <div class="partner-info">
-                    <h3>CREATIVE ADSCHOOL</h3>
-                    <p>Training & Creative Education</p>
-                </div>
-            </a>
-        </div>
-    </div>
-</section>
-        /* FOOTER */
-        footer { padding: 120px 5%; border-top: 1px solid #222; margin-top: 5vh; }
+        footer { padding: 120px 5%; border-top: 1px solid #222; }
         .social-links { margin-top: 40px; display: flex; gap: 25px; }
-        .social-links a { color: var(--text); text-decoration: none; font-size: 0.8rem; font-weight: 700; text-transform: uppercase; opacity: 0.4; transition: 0.3s; }
-        .social-links a:hover { opacity: 1; color: var(--primary); }
+        .social-links a { color: var(--text); text-decoration: none; font-size: 0.8rem; font-weight: 700; text-transform: uppercase; opacity: 0.4; }
 
-        @media (max-width: 900px) { 
-            .work-grid { grid-template-columns: 1fr; } 
-            .hero h1 { font-size: 18vw; }
-            .close-detail { right: 20px; top: 20px; padding: 10px 20px; }
-        }
+        @media (max-width: 900px) { .work-grid { grid-template-columns: 1fr; } .hero h1 { font-size: 18vw; } }
     </style>
 </head>
 <body>
@@ -141,6 +100,30 @@
             <button id="loadMoreBtn">Voir plus de projets</button>
         </div>
 
+        <section class="ecosystem-section">
+            <div class="container">
+                <h2 class="gsap-reveal outline" style="font-size: clamp(2rem, 5vw, 4rem); margin-bottom: 50px;">OUR ECOSYSTEM.</h2>
+                <div class="ecosystem-grid">
+                    <a href="https://ykone.com/influencer-marketing-agency-tunis/" target="_blank" class="partner-card">
+                        <div class="partner-logo"><img src="img/ykone-logo.png" alt="Ykone"></div>
+                        <div class="partner-info"><h3>YKONE TUNISIE</h3><p>Influencer Marketing</p></div>
+                    </a>
+                    <a href="https://www.omd.com/" target="_blank" class="partner-card">
+                        <div class="partner-logo"><img src="img/omd-logo.png" alt="OMD"></div>
+                        <div class="partner-info"><h3>OMD TUNISIE</h3><p>Media & Strategy</p></div>
+                    </a>
+                    <a href="https://3-p.tn/" target="_blank" class="partner-card">
+                        <div class="partner-logo"><img src="img/3p-logo.png" alt="3P"></div>
+                        <div class="partner-info"><h3>3P</h3><p>Production & Events</p></div>
+                    </a>
+                    <a href="https://www.creativeadschool.com/" target="_blank" class="partner-card">
+                        <div class="partner-logo"><img src="img/adschool-logo.png" alt="Adschool"></div>
+                        <div class="partner-info"><h3>CREATIVE ADSCHOOL</h3><p>Training</p></div>
+                    </a>
+                </div>
+            </div>
+        </section>
+
         <footer>
             <h2 style="font-size: clamp(2rem, 5vw, 5rem); font-weight: 900; line-height: 1;">PRÊT POUR <br><span style="color: var(--primary);">LE RÉSULTAT ?</span></h2>
             <div style="margin-top: 40px;">
@@ -150,33 +133,25 @@
             <div class="social-links">
                 <a href="https://www.facebook.com/3SGGROUP" target="_blank">Facebook</a>
                 <a href="https://www.linkedin.com/company/3sggroup" target="_blank">LinkedIn</a>
-                <a href="https://www.youtube.com/@3SGGroup" target="_blank">YouTube</a>
             </div>
         </footer>
     </main>
 
     <div id="project-detail" data-lenis-prevent>
         <div class="close-detail" onclick="closeProject()">FERMER ✕</div>
-        <h1 id="detail-title" style="font-size: clamp(2.5rem, 6vw, 5rem); text-transform: uppercase; color: var(--primary); font-weight: 900; line-height: 0.9;"></h1>
-        <p id="detail-desc" style="font-size: 1.2rem; margin-top: 30px; max-width: 800px; opacity: 0.8; line-height: 1.5;"></p>
+        <h1 id="detail-title" style="font-size: 8vw; text-transform: uppercase; color: var(--primary); font-weight: 900;"></h1>
+        <p id="detail-desc" style="font-size: 1.2rem; margin-top: 30px; max-width: 800px; opacity: 0.8;"></p>
         <div class="media-viewer"></div>
     </div>
 
     <script>
-        // 1. CONFIGURATION
         const myProjects = [
-            { title: "Tunisie Telecom", category: "TELECOM", image: "img/Telecom.png", desc: "Campagne stratégique 360° pour l'opérateur national." },
-            { title: "Pepsi", 
-                category: "CREATIVE", 
-                image: "img/Pepsi.jpg", 
-                desc: "Campagne créative Pepsi : Activation de marque et contenu digital percutant.", 
-                detailVideo: "video/pepsi.mp4" 
-            },
-            { title: "MG", category: "RETAIL", image: "https://images.unsplash.com/photo-1534723452862-4c874018d66d?q=80&w=1200", desc: "Modernisation de l'image Magasin Général." },
-            { title: "Lloyd", category: "ASSURANCE", image: "https://images.unsplash.com/photo-1450101499163-c8848c66ca85?q=80&w=1200", desc: "Stratégie de communication Lloyd Assurances." },
-            { title: "Moulin d'Or", category: "AGRO", image: "https://images.unsplash.com/photo-1509440159596-0249088772ff?q=80&w=1200", desc: "Campagnes gourmandes et branding Moulin d'Or." },
-            { title: "Lancement X", category: "DIGITAL", image: "https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=1200", desc: "Déploiement digital innovant." },
-            { title: "Campagne Été", category: "EVENT", image: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=1200", desc: "Activation terrain et digitale pour l'été." }
+            { title: "Tunisie Telecom", category: "TELECOM", image: "img/Telecom.png", desc: "Campagne stratégique 360°." },
+            { title: "Pepsi", category: "CREATIVE", image: "img/Pepsi.jpg", desc: "Contenu digital percutant.", detailVideo: "video/pepsi.mp4" },
+            { title: "MG", category: "RETAIL", image: "https://images.unsplash.com/photo-1534723452862-4c874018d66d?q=80&w=1200", desc: "Modernisation Magasin Général." },
+            { title: "Lloyd", category: "ASSURANCE", image: "https://images.unsplash.com/photo-1450101499163-c8848c66ca85?q=80&w=1200", desc: "Confiance Lloyd Assurances." },
+            { title: "Moulin d'Or", category: "AGRO", image: "https://images.unsplash.com/photo-1509440159596-0249088772ff?q=80&w=1200", desc: "Branding Moulin d'Or." },
+            { title: "Lancement X", category: "DIGITAL", image: "https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=1200", desc: "Innovation digitale." }
         ];
 
         let projectsShown = 6;
@@ -184,7 +159,6 @@
         const loadMoreBtn = document.getElementById('loadMoreBtn');
         const nav = document.getElementById('main-nav');
 
-        // 2. MASONRY LOGIC
         function resizeGridItem(item){
             const grid = document.querySelector(".work-grid");
             const rowHeight = parseInt(window.getComputedStyle(grid).getPropertyValue('grid-auto-rows'));
@@ -203,61 +177,40 @@
                 div.innerHTML = `<img src="${proj.image}" onload="resizeGridItem(this.parentElement)"><div class="project-info"><h3>${proj.title}</h3><p>${proj.category}</p></div>`;
                 container.appendChild(div);
             });
-            if (projectsShown >= myProjects.length) loadMoreBtn.style.display = 'none';
         }
 
-        // 3. NAVIGATION HIDE/SHOW ON SCROLL
         window.addEventListener('scroll', () => {
-            if (window.scrollY > 100) {
-                gsap.to(nav, { opacity: 0, y: -20, duration: 0.4, ease: "power2.out", pointerEvents: "none" });
-            } else {
-                gsap.to(nav, { opacity: 1, y: 0, duration: 0.4, ease: "power2.out", pointerEvents: "auto" });
-            }
+            if (window.scrollY > 100) gsap.to(nav, { opacity: 0, y: -20, duration: 0.4, pointerEvents: "none" });
+            else gsap.to(nav, { opacity: 1, y: 0, duration: 0.4, pointerEvents: "auto" });
         });
 
-        // 4. DETAILS & SCROLL
         function openProject(title, desc, video, img) {
             const detailPanel = document.getElementById('project-detail');
             detailPanel.scrollTop = 0;
             document.getElementById('detail-title').innerText = title;
-            document.getElementById('detail-desc').innerText = desc || "";
+            document.getElementById('detail-desc').innerText = desc;
             const viewer = document.querySelector('.media-viewer');
-            viewer.innerHTML = '';
-            if(video) viewer.innerHTML += `<video controls autoplay muted playsinline><source src="${video}" type="video/mp4"></video>`;
-            if(img) viewer.innerHTML += `<img src="${img}" alt="${title}">`;
+            viewer.innerHTML = video ? `<video controls autoplay muted playsinline><source src="${video}" type="video/mp4"></video>` : `<img src="${img}">`;
             gsap.to("#project-detail", { visibility: "visible", y: 0, duration: 0.8, ease: "expo.out" });
             lenis.stop();
         }
 
         function closeProject() {
-            const video = document.querySelector('.media-viewer video');
-            if(video) video.pause();
-            gsap.to("#project-detail", { y: "100%", duration: 0.6, ease: "expo.in", onComplete: () => {
+            gsap.to("#project-detail", { y: "100%", duration: 0.6, onComplete: () => { 
                 document.getElementById('project-detail').style.visibility = "hidden";
-                lenis.start();
+                lenis.start(); 
             }});
         }
 
-        // 5. INIT
         const lenis = new Lenis();
         function raf(time) { lenis.raf(time); requestAnimationFrame(raf); }
         requestAnimationFrame(raf);
 
-        loadMoreBtn.addEventListener('click', () => { 
-            projectsShown += 4; 
-            renderProjects(); 
-            gsap.from(".project", { opacity: 0, y: 30, duration: 0.5, stagger: 0.1 }); 
-        });
+        gsap.from(".gsap-reveal", { y: 100, opacity: 0, duration: 1.5, stagger: 0.2, ease: "power4.out" });
+        gsap.from(".partner-card", { scrollTrigger: { trigger: ".ecosystem-grid", start: "top 80%" }, y: 50, opacity: 0, duration: 1, stagger: 0.2, ease: "power4.out" });
 
         window.onload = renderProjects;
-        window.addEventListener('resize', () => {
-            document.querySelectorAll('.project').forEach(item => resizeGridItem(item));
-        });
-
-        gsap.from(".gsap-reveal", { y: 100, opacity: 0, duration: 1.5, stagger: 0.2, ease: "power4.out" });
+        window.addEventListener('resize', () => document.querySelectorAll('.project').forEach(item => resizeGridItem(item)));
     </script>
 </body>
 </html>
-
-
-
