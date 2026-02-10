@@ -42,62 +42,103 @@
         .project-info { position: absolute; bottom: 30px; left: 30px; pointer-events: none; z-index: 3; }
         .project h3 { font-weight: 900; font-size: clamp(1.2rem, 3vw, 2rem); text-transform: uppercase; text-shadow: 2px 2px 15px rgba(0,0,0,0.7); }
 
-        /* Alignement horizontal forcé pour 5 éléments */
+        /* SECTION ECOSYSTEM - VERSION COMPACTE */
+.ecosystem-section { 
+    padding: 60px 5%; /* Réduit de 120px à 60px */
+    border-top: 1px solid rgba(255, 255, 255, 0.1); 
+    background: #111111; 
+}
+
 .ecosystem-grid { 
     display: flex; 
-    flex-wrap: nowrap; /* Empêche le retour à la ligne sur écran large */
-    justify-content: space-between; 
+    flex-wrap: nowrap; 
+    justify-content: center; 
     align-items: stretch; 
-    gap: 15px; 
+    gap: 15px; /* Espace réduit entre les cartes */
     width: 100%;
 }
 
+/* SECTION ECOSYSTEM - DESIGN ÉPURÉ */
+.ecosystem-section { 
+    padding: 80px 5%; 
+    background: var(--bg); /* Utilise le noir du site */
+    border-top: 1px solid rgba(255, 255, 255, 0.1); 
+}
+
+.ecosystem-grid { 
+    display: flex; 
+    flex-wrap: wrap; 
+    justify-content: center; 
+    gap: 20px; 
+    margin-top: 50px;
+}
+
 .partner-card { 
-    flex: 1; /* Force chaque carte à occuper un espace égal (1/5ème) */
-    min-width: 0; /* Important pour que Flexbox puisse réduire les cartes correctement */
+    flex: 1;
+    aspect-ratio: 1 / 1; /* Forme carrée parfaite */
+    min-width: 200px;
+    max-width: 240px;
     text-decoration: none; 
-    color: var(--text); 
-    background: rgba(255, 255, 255, 0.05); 
-    padding: 40px 15px; 
-    border-radius: 15px; 
-    transition: all 0.5s ease; 
+    background: rgba(255, 255, 255, 0.03); 
+    padding: 30px 15px; 
+    border-radius: 8px; /* Coins légèrement arrondis pour le style pro */
     border: 1px solid rgba(255, 255, 255, 0.1); 
     display: flex; 
     flex-direction: column; 
     align-items: center; 
-    text-align: center; 
+    justify-content: center;
+    transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.partner-card:hover { 
+    background: rgba(255, 255, 255, 0.08); 
+    border-color: var(--primary); /* Lueur rouge au survol */
+    transform: translateY(-10px); 
 }
 
 .partner-logo { 
-    height: 60px; /* Hauteur légèrement réduite pour que les 5 rentrent bien */
-    width: 100%;
-    margin-bottom: 20px; 
+    height: 60px; /* Taille de logo équilibrée */
+    margin-bottom: 25px; 
     display: flex; 
     align-items: center; 
     justify-content: center; 
+    filter: brightness(0) invert(1); /* Logos blancs par défaut pour l'homogénéité */
+    opacity: 0.7;
+    transition: 0.4s ease;
+}
+
+.partner-card:hover .partner-logo { 
+    filter: none; /* Retour aux couleurs d'origine au survol */
+    opacity: 1;
 }
 
 .partner-logo img { 
     max-height: 100%; 
-    max-width: 90%; 
+    max-width: 80%; 
     object-fit: contain; 
 }
 
-/* Adaptation pour les petits écrans (Tablettes/Mobiles) */
-@media (max-width: 1100px) {
-    .ecosystem-grid { 
-        flex-wrap: wrap; /* Permet de passer à la ligne si l'écran est trop petit */
-        justify-content: center;
-    }
-    .partner-card { 
-        flex: 0 1 calc(33.33% - 20px); /* 3 par ligne sur tablette */
-    }
+/* TYPOGRAPHIE ORIGINALE */
+.partner-info h3 { 
+    font-size: 0.9rem; 
+    font-weight: 900; /* Gras pour le nom */
+    color: #ffffff; 
+    margin-bottom: 5px; 
+    text-transform: uppercase;
+    letter-spacing: 1px;
 }
 
-@media (max-width: 700px) {
-    .partner-card { 
-        flex: 0 1 calc(100% - 20px); /* 1 par ligne sur mobile */
-    }
+.partner-info p { 
+    font-size: 0.65rem; 
+    font-weight: 400; /* Plus fin pour le métier */
+    color: #ffffff; 
+    opacity: 0.5; /* Style estompé d'origine */
+    text-transform: uppercase; 
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+    .partner-card { flex: 0 1 calc(50% - 20px); aspect-ratio: 1/1; }
 }
 
         /* MODAL DETAILS */
@@ -216,37 +257,38 @@
         <section id="projects-container" class="work-grid"></section>
 
         <section class="ecosystem-section">
-            <div class="container">
-                <h2 class="gsap-reveal outline" style="font-size: clamp(2.5rem, 6vw, 5rem); margin-bottom: 60px; font-weight: 900;">OUR ECOSYSTEM.</h2>
-                <div class="ecosystem-grid">
-                    <a href="https://ykone.com/influencer-marketing-agency-tunis/" target="_blank" class="partner-card">
-                        <div class="partner-logo"><img src="img/ykone-logo.png" alt="Ykone"></div>
-                        <div class="partner-info"><h3>YKONE TUNISIE</h3><p>Influencer Marketing</p></div>
-                    </a>
-                    <a href="https://www.omd.com/" target="_blank" class="partner-card">
-                        <div class="partner-logo"><img src="img/omd-logo.png" alt="OMD"></div>
-                        <div class="partner-info"><h3>OMD TUNISIE</h3><p>Media & Strategy</p></div>
-                    </a>
-                    <a href="https://3-p.tn/" target="_blank" class="partner-card">
-                        <div class="partner-logo"><img src="img/3p-logo.png" alt="3P"></div>
-                        <div class="partner-info"><h3>3P</h3><p>Production & Events</p></div>
-                    </a>
-                    <a href="https://www.creativeadschool.com/" target="_blank" class="partner-card">
-                        <div class="partner-logo"><img src="img/adschool-logo.png" alt="Adschool"></div>
-                        <div class="partner-info"><h3>CREATIVE ADSCHOOL</h3><p>Training</p></div>
-                    </a>
-                    <a href="#" target="_blank" class="partner-card">
-    <div class="partner-logo">
-        <img src="img/Horama.png" alt="Horama">
+    <div class="container">
+        <h2 class="gsap-reveal outline" style="font-size: clamp(2.5rem, 6vw, 5rem); margin-bottom: 40px; font-weight: 900;">OUR ECOSYSTEM.</h2>
+        
+        <div class="ecosystem-grid">
+            
+
+            <a href="https://ykone.com/influencer-marketing-agency-tunis/" target="_blank" class="partner-card">
+                <div class="partner-logo"><img src="img/ykone-logo.png" alt="Ykone"></div>
+                <div class="partner-info"><h3>YKONE TUNISIE</h3><p>Influencer Marketing</p></div>
+            </a>
+
+            <a href="https://www.omd.com/" target="_blank" class="partner-card">
+                <div class="partner-logo"><img src="img/omd-logo.png" alt="OMD"></div>
+                <div class="partner-info"><h3>OMD TUNISIE</h3><p>Media & Strategy</p></div>
+            </a>
+
+            <a href="https://3-p.tn/" target="_blank" class="partner-card">
+                <div class="partner-logo"><img src="img/3p-logo.png" alt="3P"></div>
+                <div class="partner-info"><h3>3P</h3><p>Production & Events</p></div>
+            </a>
+
+            <a href="https://www.creativeadschool.com/" target="_blank" class="partner-card">
+                <div class="partner-logo"><img src="img/adschool-logo.png" alt="Creative Adschool"></div>
+                <div class="partner-info"><h3>CREATIVE ADSCHOOL</h3><p>Training</p></div>
+            </a>
+			<a href="#" target="_blank" class="partner-card">
+                <div class="partner-logo"><img src="img/Horama.jpg" alt="Horama"></div>
+                <div class="partner-info"><h3>HORAMA</h3><p>Strategic Advisory</p></div>
+            </a>
+        </div>
     </div>
-    <div class="partner-info">
-        <h3>HORAMA</h3>
-        <p>Strategic Advisory</p>
-    </div>
-</a>
-                </div>
-            </div>
-        </section>
+</section>
 
         <section class="leadership-section">
     <div class="container">
@@ -396,6 +438,7 @@
     </script>
 </body>
 </html>
+
 
 
 
