@@ -42,36 +42,63 @@
         .project-info { position: absolute; bottom: 30px; left: 30px; pointer-events: none; z-index: 3; }
         .project h3 { font-weight: 900; font-size: clamp(1.2rem, 3vw, 2rem); text-transform: uppercase; text-shadow: 2px 2px 15px rgba(0,0,0,0.7); }
 
-        /* SECTION ECOSYSTEM - ALIGNEMENT PARFAIT */
-        .ecosystem-section { padding: 120px 5%; border-top: 1px solid rgba(255, 255, 255, 0.1); background: #111111; }
-        .ecosystem-grid { 
-            display: flex; 
-            flex-wrap: wrap; 
-            justify-content: center; 
-            align-items: stretch; 
-            gap: 25px; 
-        }
-        .partner-card { 
-            flex: 1;
-            min-width: 260px;
-            max-width: 300px;
-            text-decoration: none; color: var(--text); background: rgba(255, 255, 255, 0.05); 
-            padding: 50px 30px; border-radius: 20px; transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1); 
-            border: 1px solid rgba(255, 255, 255, 0.15); display: flex; flex-direction: column; 
-            align-items: center; text-align: center; 
-        }
-        .partner-card:hover { 
-            background: rgba(255, 255, 255, 0.08); border-color: var(--primary); 
-            transform: translateY(-15px); box-shadow: 0 40px 80px rgba(0, 0, 0, 0.6);
-        }
-        .partner-logo { 
-            height: 80px; width: 100%; margin-bottom: 25px; display: flex; align-items: center; justify-content: center; 
-            filter: brightness(0) invert(1); opacity: 0.8; transition: all 0.4s ease; 
-        }
-        .partner-card:hover .partner-logo { filter: none; opacity: 1; transform: scale(1.1); }
-        .partner-logo img { max-height: 100%; max-width: 90%; width: auto; object-fit: contain; }
-        .partner-info h3 { font-size: 1rem; font-weight: 900; letter-spacing: 1px; color: #ffffff; margin-bottom: 8px; }
-        .partner-info p { font-size: 0.7rem; font-weight: 900; color: var(--primary); text-transform: uppercase; letter-spacing: 2px; }
+        /* Alignement horizontal forcé pour 5 éléments */
+.ecosystem-grid { 
+    display: flex; 
+    flex-wrap: nowrap; /* Empêche le retour à la ligne sur écran large */
+    justify-content: space-between; 
+    align-items: stretch; 
+    gap: 15px; 
+    width: 100%;
+}
+
+.partner-card { 
+    flex: 1; /* Force chaque carte à occuper un espace égal (1/5ème) */
+    min-width: 0; /* Important pour que Flexbox puisse réduire les cartes correctement */
+    text-decoration: none; 
+    color: var(--text); 
+    background: rgba(255, 255, 255, 0.05); 
+    padding: 40px 15px; 
+    border-radius: 15px; 
+    transition: all 0.5s ease; 
+    border: 1px solid rgba(255, 255, 255, 0.1); 
+    display: flex; 
+    flex-direction: column; 
+    align-items: center; 
+    text-align: center; 
+}
+
+.partner-logo { 
+    height: 60px; /* Hauteur légèrement réduite pour que les 5 rentrent bien */
+    width: 100%;
+    margin-bottom: 20px; 
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+}
+
+.partner-logo img { 
+    max-height: 100%; 
+    max-width: 90%; 
+    object-fit: contain; 
+}
+
+/* Adaptation pour les petits écrans (Tablettes/Mobiles) */
+@media (max-width: 1100px) {
+    .ecosystem-grid { 
+        flex-wrap: wrap; /* Permet de passer à la ligne si l'écran est trop petit */
+        justify-content: center;
+    }
+    .partner-card { 
+        flex: 0 1 calc(33.33% - 20px); /* 3 par ligne sur tablette */
+    }
+}
+
+@media (max-width: 700px) {
+    .partner-card { 
+        flex: 0 1 calc(100% - 20px); /* 1 par ligne sur mobile */
+    }
+}
 
         /* MODAL DETAILS */
         #project-detail { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--bg); z-index: 2000; visibility: hidden; padding: 120px 8% 50px; overflow-y: auto; transform: translateY(100%); }
@@ -369,6 +396,7 @@
     </script>
 </body>
 </html>
+
 
 
 
