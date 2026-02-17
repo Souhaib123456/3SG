@@ -34,7 +34,7 @@
         .reel-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center; z-index: 2; text-align: center; }
         .reel-overlay h2 { font-size: clamp(2.5rem, 8vw, 6rem); font-weight: 900; text-transform: uppercase; line-height: 1; }
 
-        /* GRILLE MASONRY (ANTI-VIDE) */
+        /* GRILLE MASONRY */
         .work-grid { display: grid; grid-template-columns: repeat(2, 1fr); grid-auto-rows: 10px; gap: 15px; padding: 0 15px; grid-auto-flow: dense; }
         .project { position: relative; overflow: hidden; cursor: pointer; background: #151515; display: none; width: 100%; }
         .project img { width: 100%; height: auto; transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1); filter: grayscale(1); opacity: 0.8; display: block; }
@@ -42,108 +42,40 @@
         .project-info { position: absolute; bottom: 30px; left: 30px; pointer-events: none; z-index: 3; }
         .project h3 { font-weight: 900; font-size: clamp(1.2rem, 3vw, 2rem); text-transform: uppercase; text-shadow: 2px 2px 15px rgba(0,0,0,0.7); }
 
-        /* SECTION ECOSYSTEM - VERSION COMPACTE */
-.ecosystem-section { 
-    padding: 60px 5%; /* Réduit de 120px à 60px */
-    border-top: 1px solid rgba(255, 255, 255, 0.1); 
-    background: #111111; 
-}
-
-.ecosystem-grid { 
-    display: flex; 
-    flex-wrap: nowrap; 
-    justify-content: center; 
-    align-items: stretch; 
-    gap: 15px; /* Espace réduit entre les cartes */
-    width: 100%;
-}
-
-/* SECTION ECOSYSTEM - DESIGN ÉPURÉ */
-.ecosystem-section { 
-    padding: 80px 5%; 
-    background: var(--bg); /* Utilise le noir du site */
-    border-top: 1px solid rgba(255, 255, 255, 0.1); 
-}
-
-.ecosystem-grid { 
-    display: flex; 
-    flex-wrap: wrap; 
-    justify-content: center; 
-    gap: 20px; 
-    margin-top: 50px;
-}
-
-.partner-card { 
-    flex: 1;
-    aspect-ratio: 1 / 1; /* Forme carrée parfaite */
-    min-width: 200px;
-    max-width: 240px;
-    text-decoration: none; 
-    background: rgba(255, 255, 255, 0.03); 
-    padding: 30px 15px; 
-    border-radius: 8px; /* Coins légèrement arrondis pour le style pro */
-    border: 1px solid rgba(255, 255, 255, 0.1); 
-    display: flex; 
-    flex-direction: column; 
-    align-items: center; 
-    justify-content: center;
-    transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.partner-card:hover { 
-    background: rgba(255, 255, 255, 0.08); 
-    border-color: var(--primary); /* Lueur rouge au survol */
-    transform: translateY(-10px); 
-}
-
-.partner-logo { 
-    height: 60px; /* Taille de logo équilibrée */
-    margin-bottom: 25px; 
-    display: flex; 
-    align-items: center; 
-    justify-content: center; 
-    filter: brightness(0) invert(1); /* Logos blancs par défaut pour l'homogénéité */
-    opacity: 0.7;
-    transition: 0.4s ease;
-}
-
-.partner-card:hover .partner-logo { 
-    filter: none; /* Retour aux couleurs d'origine au survol */
-    opacity: 1;
-}
-
-.partner-logo img { 
-    max-height: 100%; 
-    max-width: 80%; 
-    object-fit: contain; 
-}
-
-/* TYPOGRAPHIE ORIGINALE */
-.partner-info h3 { 
-    font-size: 0.9rem; 
-    font-weight: 900; /* Gras pour le nom */
-    color: #ffffff; 
-    margin-bottom: 5px; 
-    text-transform: uppercase;
-    letter-spacing: 1px;
-}
-
-.partner-info p { 
-    font-size: 0.65rem; 
-    font-weight: 400; /* Plus fin pour le métier */
-    color: #ffffff; 
-    opacity: 0.5; /* Style estompé d'origine */
-    text-transform: uppercase; 
-}
-
-/* Mobile */
-@media (max-width: 768px) {
-    .partner-card { flex: 0 1 calc(50% - 20px); aspect-ratio: 1/1; }
-}
+        /* ECOSYSTEM */
+        .ecosystem-section { padding: 80px 5%; background: var(--bg); border-top: 1px solid rgba(255, 255, 255, 0.1); }
+        .ecosystem-grid { display: flex; flex-wrap: wrap; justify-content: center; gap: 20px; margin-top: 50px; }
+        .partner-card { flex: 1; aspect-ratio: 1 / 1; min-width: 200px; max-width: 240px; text-decoration: none; background: rgba(255, 255, 255, 0.03); padding: 30px 15px; border-radius: 8px; border: 1px solid rgba(255, 255, 255, 0.1); display: flex; flex-direction: column; align-items: center; justify-content: center; transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1); }
+        .partner-card:hover { background: rgba(255, 255, 255, 0.08); border-color: var(--primary); transform: translateY(-10px); }
+        .partner-logo { height: 60px; margin-bottom: 25px; display: flex; align-items: center; justify-content: center; filter: brightness(0) invert(1); opacity: 0.7; transition: 0.4s ease; }
+        .partner-card:hover .partner-logo { filter: none; opacity: 1; }
+        .partner-logo img { max-height: 100%; max-width: 80%; object-fit: contain; }
+        .partner-info h3 { font-size: 0.9rem; font-weight: 900; color: #ffffff; margin-bottom: 5px; text-transform: uppercase; letter-spacing: 1px; text-align: center;}
+        .partner-info p { font-size: 0.65rem; font-weight: 400; color: #ffffff; opacity: 0.5; text-transform: uppercase; text-align: center;}
 
         /* MODAL DETAILS */
         #project-detail { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--bg); z-index: 2000; visibility: hidden; padding: 120px 8% 50px; overflow-y: auto; transform: translateY(100%); }
-        .close-detail { position: fixed; top: 40px; right: 50px; cursor: pointer; font-weight: 900; border: 1px solid #fff; padding: 12px 30px; border-radius: 50px; z-index: 2100; background: rgba(0,0,0,0.5); }
+        .close-detail { position: fixed; top: 40px; right: 50px; cursor: pointer; font-weight: 900; border: 1px solid #fff; padding: 12px 30px; border-radius: 50px; z-index: 2100; background: rgba(0,0,0,0.8); transition: 0.3s; }
+        .close-detail:hover { background: var(--primary); border-color: var(--primary); }
+
+        /* LEADERSHIP */
+        .leadership-section { padding: 120px 5%; background: var(--bg); }
+        .leader-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 40px; }
+        .leader-card { position: relative; overflow: hidden; text-align: left; }
+        .leader-photo { width: 100%; aspect-ratio: 4/5; background: #151515; overflow: hidden; margin-bottom: 20px; }
+        .leader-photo img { width: 100%; height: 100%; object-fit: cover; filter: grayscale(1); transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1); }
+        .leader-card:hover .leader-photo img { filter: grayscale(0); transform: scale(1.05); }
+        .leader-info h3 { font-size: 1.2rem; font-weight: 700; text-transform: uppercase; margin-bottom: 5px; letter-spacing: 1px; }
+        .leader-info p { font-size: 0.75rem; color: var(--primary); font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; opacity: 0.8; }
+
+        /* AWARDS */
+        .awards-section { padding: 80px 5%; text-align: center; background: #0d0d0d; }
+        .awards-image { width: 100%; max-width: 1000px; height: auto; filter: grayscale(1) contrast(1.1); transition: 0.5s; margin: 40px 0; }
+        .awards-image:hover { filter: grayscale(0); }
+        .awards-text { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 2px; opacity: 0.5; }
+
+        /* MEDIA VIEWER (DANS MODAL) */
+        .media-viewer img, .media-viewer video { width: 100%; height: auto; margin-bottom: 30px; display: block; border-radius: 4px; }
 
         /* FOOTER */
         footer { padding: 120px 5%; border-top: 1px solid #222; }
@@ -151,85 +83,12 @@
         .social-links a { color: var(--text); text-decoration: none; font-size: 0.8rem; font-weight: 700; text-transform: uppercase; opacity: 0.4; transition: 0.3s; }
         .social-links a:hover { opacity: 1; color: var(--primary); }
 
-        /* RESPONSIVE */
         @media (max-width: 900px) { 
             .work-grid { grid-template-columns: 1fr; } 
             .ecosystem-grid { flex-direction: column; align-items: center; }
             .partner-card { width: 100%; max-width: 100%; }
+            .close-detail { top: 20px; right: 20px; padding: 10px 20px; font-size: 0.7rem; }
         }
-        .awards-section {
-    padding: 80px 5%;
-    text-align: center;
-    background: #0d0d0d;
-}
-.awards-image {
-    width: 100%;
-    max-width: 1000px;
-    height: auto;
-    filter: grayscale(1) contrast(1.1); /* Pour un look élégant */
-    transition: filter 0.5s ease;
-    margin: 40px 0;
-}
-.awards-image:hover {
-    filter: grayscale(0); /* Reprend ses couleurs au survol */
-}
-.awards-text {
-    font-size: 0.8rem;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    opacity: 0.5;
-}
-        .leadership-section { padding: 120px 5%; background: var(--bg); }
-
-.leader-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 40px;
-}
-
-.leader-card {
-    position: relative;
-    overflow: hidden;
-    text-align: left;
-}
-
-.leader-photo {
-    width: 100%;
-    aspect-ratio: 4/5; /* Format portrait élégant */
-    background: #151515;
-    overflow: hidden;
-    margin-bottom: 20px;
-}
-
-.leader-photo img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    filter: grayscale(1); /* Noir et blanc par défaut */
-    transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.leader-card:hover .leader-photo img {
-    filter: grayscale(0); /* Couleur au survol */
-    transform: scale(1.05);
-}
-
-.leader-info h3 {
-    font-size: 1.2rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    margin-bottom: 5px;
-    letter-spacing: 1px;
-}
-
-.leader-info p {
-    font-size: 0.75rem;
-    color: var(--primary); /* Rouge 3SG */
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 1.5px;
-    opacity: 0.8;
-}
     </style>
 </head>
 <body>
@@ -257,95 +116,68 @@
         <section id="projects-container" class="work-grid"></section>
 
         <section class="ecosystem-section">
-    <div class="container">
-        <h2 class="gsap-reveal outline" style="font-size: clamp(2.5rem, 6vw, 5rem); margin-bottom: 40px; font-weight: 900;">OUR ECOSYSTEM.</h2>
-        
-        <div class="ecosystem-grid">
-            
-
-            <a href="https://ykone.com/influencer-marketing-agency-tunis/" target="_blank" class="partner-card">
-                <div class="partner-logo"><img src="img/ykone-logo.png" alt="Ykone"></div>
-                <div class="partner-info"><h3>YKONE TUNISIE</h3><p>Influencer Marketing</p></div>
-            </a>
-
-            <a href="https://www.omd.com/" target="_blank" class="partner-card">
-                <div class="partner-logo"><img src="img/omd-logo.png" alt="OMD"></div>
-                <div class="partner-info"><h3>OMD TUNISIE</h3><p>Media & Strategy</p></div>
-            </a>
-
-            <a href="https://3-p.tn/" target="_blank" class="partner-card">
-                <div class="partner-logo"><img src="img/3p-logo.png" alt="3P"></div>
-                <div class="partner-info"><h3>3P</h3><p>Production & Events</p></div>
-            </a>
-
-            <a href="https://www.creativeadschool.com/" target="_blank" class="partner-card">
-                <div class="partner-logo"><img src="img/adschool-logo.png" alt="Creative Adschool"></div>
-                <div class="partner-info"><h3>CREATIVE ADSCHOOL</h3><p>Training</p></div>
-            </a>
-			<a href="#" target="_blank" class="partner-card">
-                <div class="partner-logo"><img src="img/Horama.png" alt="Horama"></div>
-                <div class="partner-info"><h3>HORAMA</h3><p>Strategic Advisory</p></div>
-            </a>
-        </div>
-    </div>
-</section>
+            <div class="container">
+                <h2 class="gsap-reveal outline" style="font-size: clamp(2.5rem, 6vw, 5rem); margin-bottom: 40px; font-weight: 900;">OUR ECOSYSTEM.</h2>
+                <div class="ecosystem-grid">
+                    <a href="https://ykone.com/influencer-marketing-agency-tunis/" target="_blank" class="partner-card">
+                        <div class="partner-logo"><img src="img/ykone-logo.png" alt="Ykone"></div>
+                        <div class="partner-info"><h3>YKONE TUNISIE</h3><p>Influencer Marketing</p></div>
+                    </a>
+                    <a href="https://www.omd.com/" target="_blank" class="partner-card">
+                        <div class="partner-logo"><img src="img/omd-logo.png" alt="OMD"></div>
+                        <div class="partner-info"><h3>OMD TUNISIE</h3><p>Media & Strategy</p></div>
+                    </a>
+                    <a href="https://3-p.tn/" target="_blank" class="partner-card">
+                        <div class="partner-logo"><img src="img/3p-logo.png" alt="3P"></div>
+                        <div class="partner-info"><h3>3P</h3><p>Production & Events</p></div>
+                    </a>
+                    <a href="https://www.creativeadschool.com/" target="_blank" class="partner-card">
+                        <div class="partner-logo"><img src="img/adschool-logo.png" alt="Creative Adschool"></div>
+                        <div class="partner-info"><h3>CREATIVE ADSCHOOL</h3><p>Training</p></div>
+                    </a>
+                    <a href="#" class="partner-card">
+                        <div class="partner-logo"><img src="img/Horama.png" alt="Horama"></div>
+                        <div class="partner-info"><h3>HORAMA</h3><p>Strategic Advisory</p></div>
+                    </a>
+                </div>
+            </div>
+        </section>
 
         <section class="leadership-section">
-    <div class="container">
-        <h2 class="gsap-reveal outline" style="font-size: clamp(2.5rem, 6vw, 5rem); margin-bottom: 60px; font-weight: 900;">LEADERSHIP.</h2>
-        
-        <div class="leader-grid">
-            <div class="leader-card gsap-reveal">
-                <div class="leader-photo"><img src="img/Hosni.png" alt="Hosni Ghariani"></div>
-                <div class="leader-info">
-                    <h3>Hosni Ghariani</h3>
-                    <p>Founder & CEO - 3SG Group</p>
+            <div class="container">
+                <h2 class="gsap-reveal outline" style="font-size: clamp(2.5rem, 6vw, 5rem); margin-bottom: 60px; font-weight: 900;">LEADERSHIP.</h2>
+                <div class="leader-grid">
+                    <div class="leader-card gsap-reveal">
+                        <div class="leader-photo"><img src="img/Hosni.png" alt="Hosni Ghariani"></div>
+                        <div class="leader-info"><h3>Hosni Ghariani</h3><p>Founder & CEO - 3SG Group</p></div>
+                    </div>
+                    <div class="leader-card gsap-reveal">
+                        <div class="leader-photo"><img src="img/Aymen.png" alt="Aymen Bouaben"></div>
+                        <div class="leader-info"><h3>Aymen Bouaben</h3><p>Managing Director - Ykone</p></div>
+                    </div>
+                    <div class="leader-card gsap-reveal">
+                        <div class="leader-photo"><img src="img/Youssef.png" alt="Youssef Thabet"></div>
+                        <div class="leader-info"><h3>Youssef Thabet</h3><p>General Manager - 3SG</p></div>
+                    </div>
+                    <div class="leader-card gsap-reveal">
+                        <div class="leader-photo"><img src="img/Yosra.png" alt="Yosra Ben Ali"></div>
+                        <div class="leader-info"><h3>Yosra Ben Ali</h3><p>Managing Director - OMD</p></div>
+                    </div>
+                    <div class="leader-card gsap-reveal">
+                        <div class="leader-photo"><img src="img/Cyril.png" alt="Cyril Mauger"></div>
+                        <div class="leader-info"><h3>Cyril Mauger</h3><p>Creative Director - 3SG</p></div>
+                    </div>
                 </div>
             </div>
+        </section>
 
-            <div class="leader-card gsap-reveal">
-                <div class="leader-photo"><img src="img/Aymen.png" alt="Aymen Bouaben"></div>
-                <div class="leader-info">
-                    <h3>Aymen Bouaben</h3>
-                    <p>Managing Director - Ykone</p>
-                </div>
-            </div>
-
-            <div class="leader-card gsap-reveal">
-                <div class="leader-photo"><img src="img/Youssef.png" alt="Youssef Thabet"></div>
-                <div class="leader-info">
-                    <h3>Youssef Thabet</h3>
-                    <p>General Manager - 3SG</p>
-                </div>
-            </div>
-
-            <div class="leader-card gsap-reveal">
-                <div class="leader-photo"><img src="img/Yosra.png" alt="Yosra Ben Ali"></div>
-                <div class="leader-info">
-                    <h3>Yosra Ben Ali</h3>
-                    <p>Managing Director - OMD</p>
-                </div>
-            </div>
-
-            <div class="leader-card gsap-reveal">
-                <div class="leader-photo"><img src="img/Cyril.png" alt="Cyril Mauger"></div>
-                <div class="leader-info">
-                    <h3>Cyril Mauger</h3>
-                    <p>Creative Director - 3SG</p>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
         <section class="awards-section">
-    <div class="container">
-        <h2 class="gsap-reveal outline">OUR SUCCESS.</h2>
-        <div class="awards-display">
-            <img src="img/trophes.png" alt="3SG Group Awards" class="awards-image">
-        </div>
-        <p class="awards-text">Plus de 20 ans d'excellence créative récompensée par les plus grands festivals.</p>
-    </div>
-</section>
+            <div class="container">
+                <h2 class="gsap-reveal outline">OUR SUCCESS.</h2>
+                <img src="img/trophes.png" alt="3SG Group Awards" class="awards-image">
+                <p class="awards-text">Plus de 20 ans d'excellence créative récompensée par les plus grands festivals.</p>
+            </div>
+        </section>
 
         <footer>
             <h2 style="font-size: clamp(2rem, 5vw, 5rem); font-weight: 900; line-height: 1;">READY FOR <br><span style="color: var(--primary);">THE RESULT?</span></h2>
@@ -364,27 +196,36 @@
     <div id="project-detail" data-lenis-prevent>
         <div class="close-detail" onclick="closeProject()">FERMER ✕</div>
         <h1 id="detail-title" style="font-size: 8vw; text-transform: uppercase; color: var(--primary); font-weight: 900; line-height: 0.9;"></h1>
-        <p id="detail-desc" style="font-size: 1.2rem; margin-top: 30px; max-width: 800px; opacity: 0.8; line-height: 1.5;"></p>
+        <p id="detail-desc" style="font-size: 1.2rem; margin-top: 30px; max-width: 800px; opacity: 0.8; line-height: 1.5; margin-bottom: 50px;"></p>
         <div class="media-viewer"></div>
     </div>
 
     <script>
-        // 1. CONFIGURATION PROJETS
+        // 1. DATA
         const myProjects = [
-            { title: "Tunisie Telecom", category: "TELECOM", image: "img/Telecom.png", desc: "Campagne stratégique 360° pour l'opérateur national." },
-            { title: "Pepsi", category: "CREATIVE", image: "img/Pepsi.jpg", desc: "Activation de marque et contenu digital percutant.", detailVideo: "video/pepsi.mp4" },
-            { title: "MG", category: "RETAIL", image: "https://images.unsplash.com/photo-1534723452862-4c874018d66d?q=80&w=1200", desc: "Modernisation de l'image Magasin Général." },
-            { title: "Lloyd", category: "ASSURANCE", image: "img/LLOYD/MARWEN.png", desc: "Stratégie de communication Lloyd Assurances." },
-            { title: "Moulin d'Or", category: "AGRO", image: "https://images.unsplash.com/photo-1509440159596-0249088772ff?q=80&w=1200", desc: "Branding Moulin d'Or." },
-            { title: "Lancement X", category: "DIGITAL", image: "https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=1200", desc: "Déploiement digital innovant." }
+            { title: "Tunisie Telecom", category: "TELECOM", image: "img/Telecom.png", desc: "Campagne stratégique 360° pour l'opérateur national.", gallery: ["img/Telecom.png", "img/telecom-2.png"] },
+            { title: "Pepsi", category: "CREATIVE", image: "img/Pepsi.jpg", desc: "Activation de marque et contenu digital percutant.", detailVideo: "video/pepsi.mp4", gallery: ["img/Pepsi.jpg"] },
+            { title: "Magasin Général", category: "RETAIL", image: "https://images.unsplash.com/photo-1534723452862-4c874018d66d?q=80&w=1200", desc: "Modernisation de l'image de marque et expérience client." },
+{ 
+    title: "Lloyd Assurances", 
+    category: "ASSURANCE", 
+    image: "img/LLOYD/MARWEN.png", 
+    desc: "Définition de la stratégie de communication globale.",
+    gallery: [
+        "img/LLOYD/MARWEN.png", // Image 1
+        "img/LLOYD/MARWEN.png", // Image 2 (exemple local)
+        "img/LLOYD/MARWEN.png", // Image 3 (exemple local)
+        "img/LLOYD/MARWEN.png" // Image 4
+    ]
+},            { title: "Moulin d'Or", category: "AGROALIMENTAIRE", image: "https://images.unsplash.com/photo-1509440159596-0249088772ff?q=80&w=1200", desc: "Refonte complète du branding et packaging." },
+            { title: "Lancement X", category: "DIGITAL", image: "https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=1200", desc: "Conception et déploiement d'une plateforme innovante." }
         ];
 
         const container = document.getElementById('projects-container');
         const nav = document.getElementById('main-nav');
 
-        // 2. MASONRY LOGIC
+        // 2. MASONRY
         function resizeGridItem(item){
-            const grid = document.querySelector(".work-grid");
             const rowHeight = 10;
             const rowGap = 15;
             const rowSpan = Math.ceil((item.querySelector('img').getBoundingClientRect().height + rowGap) / (rowHeight + rowGap));
@@ -403,27 +244,43 @@
             });
         }
 
-        // 3. NAVIGATION
+        // 3. SCROLL NAV
         window.addEventListener('scroll', () => {
-            if (window.scrollY > 100) gsap.to(nav, { opacity: 0, y: -20, duration: 0.4, pointerEvents: "none" });
-            else gsap.to(nav, { opacity: 1, y: 0, duration: 0.4, pointerEvents: "auto" });
+            if (window.scrollY > 100) gsap.to(nav, { opacity: 0, y: -20, duration: 0.4 });
+            else gsap.to(nav, { opacity: 1, y: 0, duration: 0.4 });
         });
 
-        // 4. MODAL
+        // 4. MODAL LOGIC
         function openProject(p) {
             document.getElementById('detail-title').innerText = p.title;
             document.getElementById('detail-desc').innerText = p.desc || "";
             const viewer = document.querySelector('.media-viewer');
-            viewer.innerHTML = p.detailVideo ? `<video controls autoplay muted playsinline style="width:100%"><source src="${p.detailVideo}" type="video/mp4"></video>` : `<img src="${p.image}" style="width:100%">`;
+            viewer.innerHTML = "";
+
+            if (p.detailVideo) {
+                viewer.innerHTML += `<video controls autoplay muted playsinline><source src="${p.detailVideo}" type="video/mp4"></video>`;
+            }
+
+            if (p.gallery && p.gallery.length > 0) {
+                p.gallery.forEach(imgUrl => { viewer.innerHTML += `<img src="${imgUrl}">`; });
+            } else {
+                viewer.innerHTML += `<img src="${p.image}">`;
+            }
+
             gsap.to("#project-detail", { visibility: "visible", y: 0, duration: 0.8, ease: "expo.out" });
             lenis.stop();
         }
 
         function closeProject() {
-            gsap.to("#project-detail", { y: "100%", duration: 0.6, onComplete: () => { 
-                document.getElementById('project-detail').style.visibility = "hidden";
-                lenis.start(); 
-            }});
+            gsap.to("#project-detail", { 
+                y: "100%", 
+                duration: 0.6, 
+                ease: "expo.in", 
+                onComplete: () => { 
+                    document.getElementById('project-detail').style.visibility = "hidden"; 
+                    lenis.start(); 
+                } 
+            });
         }
 
         // 5. INIT
@@ -432,22 +289,8 @@
         requestAnimationFrame(raf);
 
         gsap.from(".gsap-reveal", { y: 100, opacity: 0, duration: 1.5, stagger: 0.2, ease: "power4.out" });
-        
         window.onload = render;
         window.addEventListener('resize', () => document.querySelectorAll('.project').forEach(resizeGridItem));
     </script>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
