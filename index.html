@@ -60,7 +60,12 @@
 
         /* LEADERSHIP */
         .leadership-section { padding: 120px 5%; background: var(--bg); }
-        .leader-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 40px; }
+        .leader-grid {
+    display: grid;
+    /* Ajuste la taille minimale pour permettre 3 ou 6 colonnes selon l'écran */
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); 
+    gap: 30px;
+}
         .leader-card { position: relative; overflow: hidden; text-align: left; }
         .leader-photo { width: 100%; aspect-ratio: 4/5; background: #151515; overflow: hidden; margin-bottom: 20px; }
         .leader-photo img { width: 100%; height: 100%; object-fit: cover; filter: grayscale(1); transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1); }
@@ -115,33 +120,42 @@
 
         <section id="projects-container" class="work-grid"></section>
 
-        <section class="ecosystem-section">
-            <div class="container">
-                <h2 class="gsap-reveal outline" style="font-size: clamp(2.5rem, 6vw, 5rem); margin-bottom: 40px; font-weight: 900;">OUR ECOSYSTEM.</h2>
-                <div class="ecosystem-grid">
-                    <a href="https://ykone.com/influencer-marketing-agency-tunis/" target="_blank" class="partner-card">
-                        <div class="partner-logo"><img src="img/ykone-logo.png" alt="Ykone"></div>
-                        <div class="partner-info"><h3>YKONE TUNISIE</h3><p>Influencer Marketing</p></div>
-                    </a>
-                    <a href="https://www.omd.com/" target="_blank" class="partner-card">
-                        <div class="partner-logo"><img src="img/omd-logo.png" alt="OMD"></div>
-                        <div class="partner-info"><h3>OMD TUNISIE</h3><p>Media & Strategy</p></div>
-                    </a>
-                    <a href="https://3-p.tn/" target="_blank" class="partner-card">
-                        <div class="partner-logo"><img src="img/3p-logo.png" alt="3P"></div>
-                        <div class="partner-info"><h3>3P</h3><p>Production & Events</p></div>
-                    </a>
-                    <a href="https://www.creativeadschool.com/" target="_blank" class="partner-card">
-                        <div class="partner-logo"><img src="img/adschool-logo.png" alt="Creative Adschool"></div>
-                        <div class="partner-info"><h3>CREATIVE ADSCHOOL</h3><p>Training</p></div>
-                    </a>
-                    <a href="#" class="partner-card">
-                        <div class="partner-logo"><img src="img/Horama.png" alt="Horama"></div>
-                        <div class="partner-info"><h3>HORAMA</h3><p>Strategic Advisory</p></div>
-                    </a>
-                </div>
+       <section class="leadership-section">
+    <div class="container">
+        <h2 class="gsap-reveal outline" style="font-size: clamp(2.5rem, 6vw, 5rem); margin-bottom: 60px; font-weight: 900;">LEADERSHIP.</h2>
+        <div class="leader-grid">
+            <div class="leader-card gsap-reveal">
+                <div class="leader-photo"><img src="img/Hosni.png" alt="Hosni Ghariani"></div>
+                <div class="leader-info"><h3>Hosni Ghariani</h3><p>Founder & CEO - 3SG Group</p></div>
             </div>
-        </section>
+
+            <div class="leader-card gsap-reveal">
+                <div class="leader-photo"><img src="img/Aymen.png" alt="Aymen Bouaben"></div>
+                <div class="leader-info"><h3>Aymen Bouaben</h3><p>Managing Director - Ykone</p></div>
+            </div>
+
+            <div class="leader-card gsap-reveal">
+                <div class="leader-photo"><img src="img/Youssef.png" alt="Youssef Thabet"></div>
+                <div class="leader-info"><h3>Youssef Thabet</h3><p>Deputy General Manager - 3SG</p></div>
+            </div>
+
+            <div class="leader-card gsap-reveal">
+                <div class="leader-photo"><img src="img/Yosra.png" alt="Yosra Ben Ali"></div>
+                <div class="leader-info"><h3>Yosra Ben Ali</h3><p>Managing Director - OMD</p></div>
+            </div>
+
+            <div class="leader-card gsap-reveal">
+                <div class="leader-photo"><img src="img/Cyril.png" alt="Cyril Mauger"></div>
+                <div class="leader-info"><h3>Cyril Mauger</h3><p>General Manager - 3SG</p></div>
+            </div>
+
+            <div class="leader-card gsap-reveal">
+                <div class="leader-photo"><img src="img/Racem.png" alt="Racem Mtimet"></div>
+                <div class="leader-info"><h3>Racem Mtimet</h3><p>Executive Creative Director - 3SG</p></div>
+            </div>
+        </div>
+    </div>
+</section>
 
         <section class="leadership-section">
             <div class="container">
@@ -331,6 +345,7 @@
     </script>
 </body>
 </html>
+
 
 
 
